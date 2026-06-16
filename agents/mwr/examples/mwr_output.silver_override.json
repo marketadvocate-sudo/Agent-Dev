@@ -1,0 +1,42 @@
+{
+  "mwr_version": "1.3",
+  "source_artifact": {
+    "source_agent": "Hand-filled (standalone path)",
+    "schema_version": "1.0",
+    "generated_at": "2026-06-16T00:00:00Z",
+    "company": "Health Management Associates (HMA)"
+  },
+  "scope_used": "Silver",
+  "override": true,
+  "segment_verdicts": [
+    {
+      "segment_id": "silver-margin-bleed-mcos",
+      "tier": "Silver",
+      "name": "The Margin Bleed MCOs",
+      "recommended": true,
+      "pvp_achievable": "yes",
+      "revised": false,
+      "exemplar": {
+        "subject_line": "Your own 10-Q is showing the rate gap before the rate cell does",
+        "eyebrow_line": "What Molina's filing plus H.R. 1 say about 2027 rate development",
+        "message_body": "Molina's most recent Form 10-Q puts an estimated 15 to 20 percent enrollment reduction across roughly 1.3 million expansion members, and reports a medical loss ratio of 93.5 percent, above where investors expect it to sit. Those are the plan's own public numbers, not a forecast.\n\nRead against H.R. 1, enacted July 4, 2025, which conditions expansion eligibility on work requirements, the filings describe a book that is shrinking and getting sicker at the same time. That combination is what breaks rate adequacy, and it is visible in public disclosures a full cycle before it shows up in a state's rate cell. With 67 percent of Medicaid plans already taking rate adjustments or supplemental funding for 2025, the 2027 rate development now underway is being built on enrollment assumptions the public record already shows are moving.\n\nThe hard part is not seeing the gap. It is arguing it persuasively inside a rate negotiation, in the actuarial and policy language a state will accept. HMA's consultants have set and defended these rates from inside state agencies and health plans, so the read on what a state will actually grant comes from people who have sat on both sides of that table.",
+        "facts_used": [
+          { "value": "Molina Healthcare", "fact_type": "name", "source_name": "Molina Healthcare Form 10-Q", "publisher": "Molina Healthcare (SEC filing)", "access_class": "public" },
+          { "value": "93.5%", "fact_type": "number", "source_name": "Centene and Molina earnings disclosures", "publisher": "Centene and Molina (SEC filings)", "access_class": "public" },
+          { "value": "July 4, 2025", "fact_type": "event", "source_name": "H.R. 1 (Public Law 119-21)", "publisher": "U.S. Congress", "access_class": "public" },
+          { "value": "67%", "fact_type": "number", "source_name": "Medicaid MCO Demographics Fact Sheet", "publisher": "Institute for Medicaid Innovation (IMI)", "access_class": "public" }
+        ],
+        "seven_standard_check": [
+          { "standard": 1, "name": "Independently useful", "met": true, "basis": "Gives the finance reader a usable read on their own rate-adequacy exposure with no ask; ends on the value." },
+          { "standard": 2, "name": "Relates to the value prop", "met": true, "basis": "Closes on HMA's differentiator: consultants who have set and defended Medicaid rates from inside agencies and plans." },
+          { "standard": 3, "name": "Based on public data", "met": true, "basis": "All claims trace to public sources surviving the hardening checks: SEC filings (Molina, Centene), H.R. 1 (U.S. Congress), IMI fact sheet. No vendor or proprietary content used." },
+          { "standard": 4, "name": "Translates to meaningful insight", "met": true, "basis": "Turns the filings plus the law into a conclusion: the rate gap is observable in public disclosures a cycle before the rate cell reflects it." },
+          { "standard": 5, "name": "Goes beyond pain identification", "met": true, "basis": "Advances past the MLR pain to the real exposure: defending the gap inside a 2027 rate negotiation already underway." },
+          { "standard": 6, "name": "Creates information asymmetry", "met": true, "basis": "Connects public facts the buyer had not linked: their own 10-Q (shrinking, sicker book) read against H.R. 1's forcing function. The proprietary KFF/HMA survey from the pvp_angle is excluded." },
+          { "standard": 7, "name": "Concrete and specific", "met": true, "basis": "Specifics span name, number, and event from public sources: Molina Healthcare (name), 93.5% and 67% (number), July 4 2025 (event). Clears the type-spanning rule." }
+        ],
+        "override_warning": "Silver override in effect (default scope is Gold). Trade-offs the user is accepting: the minimum-viable-segment math degrades below pain fours; close-rate assumptions weaken because the EDP is weaker; and the resulting messaging is less specific and less compelling because there is less acute pain to relate the value prop to."
+      }
+    }
+  ]
+}

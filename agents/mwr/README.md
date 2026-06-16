@@ -16,8 +16,12 @@ use. See `MWR_CONSTITUTION.md` (v1.3) for the governing law.
 | `contracts/fhc_output.schema.json` | **Input** contract. The sole accepted input. |
 | `contracts/mwr_output.schema.json` | **Output** contract. Per-segment `pvp_achievable` + `revised`. |
 | `fixtures/fhc_output.example.hma.json` | Stamped HMA fixture (every source carries `publisher` + `access_class`). |
-| `examples/mwr_output.hma.json` | The gate run over the fixture: Gold segment returns `yes`. |
+| `fixtures/fhc_output.example.silver_override.json` | Hand-filled Silver segment with type-spanning public facts. |
+| `fixtures/fhc_output.example.thin.json` | Data-thin Gold segment (one bare public fact). |
+| `fixtures/fhc_output.example.brand_gap.json` | Empty `value_prop` to trigger a run-level decline. |
+| `examples/mwr_output.*.json` | The gate run over each fixture (see matrix below). |
 | `tools/gate.py` | Deterministic harness for the mechanical stages and schema validation. |
+| `tools/selftest.py` | Pins expected outcomes for every fixture and validates every artifact. |
 
 ## Pipeline (six stages)
 
@@ -42,7 +46,27 @@ python3 tools/gate.py report fixtures/fhc_output.example.hma.json --tier Gold
 
 # Validate a produced MWR output against the output contract:
 python3 tools/gate.py validate-output examples/mwr_output.hma.json
+
+# Run the full regression suite (all fixtures + all outputs):
+python3 tools/selftest.py
 ```
+
+## Demonstration matrix
+
+Every branch of the output contract is exercised by a fixture/output pair:
+
+| Fixture | Scope | Verdict | Demonstrates |
+| --- | --- | --- | --- |
+| `hma` | Gold (default) | `yes` | PVP achievable; GS6 asymmetry rebuilt on public data only |
+| `silver_override` | Silver (override) | `yes` + `override_warning` | Per-message trade-off warning under an instead-of override |
+| `thin` | Gold (default) | `no` (GS 6, 7) | Per-segment decline naming the gap and the input that closes it |
+| `brand_gap` | Gold (default) | run-level decline | One decline for an empty `value_prop`, not N identical no's |
+
+Note on fidelity: the **original** `hma` fixture's Silver and Bronze segments both
+decline on Standard 7 (their specifics are all quantities, no name/location/event
+anchor), so the override does not lower the bar. The `silver_override` fixture is a
+hand-filled artifact (a contract-legitimate input per constitution Section 2) built
+to carry type-spanning public facts, so it can reach `yes` and show the warning.
 
 ## The moment of truth (HMA Gold segment)
 

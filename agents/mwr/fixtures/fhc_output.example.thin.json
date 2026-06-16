@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "source_agent": "Hand-filled (standalone path)",
+  "generated_at": "2026-06-16T00:00:00Z",
+  "brand_profile": {
+    "company": "Health Management Associates (HMA)",
+    "url": "https://www.healthmanagement.com",
+    "product": "Independent national research and consulting firm in publicly funded healthcare.",
+    "value_prop": "Insider-practitioner guidance delivered by people who have held the buyer's exact job.",
+    "category": "Healthcare policy and management consulting",
+    "differentiator": "Consultants who came directly from Medicaid director and senior policy roles.",
+    "buyer_titles": ["State Medicaid Director"],
+    "lead_vertical": "Medicaid"
+  },
+  "segments": [
+    {
+      "segment_id": "gold-thin-evidence",
+      "tier": "Gold",
+      "name": "The Thin Evidence Cohort",
+      "recommended": true,
+      "sector": "Medicaid",
+      "pain_buyer_perspective": "A state Medicaid director is under deadline pressure on work requirements.",
+      "systemic_condition": "A statutory deadline with a federal guidance vacuum.",
+      "edp": {
+        "signal": "A state's implementation status on the KFF Work Requirements Tracker.",
+        "source": {
+          "name": "KFF Medicaid Work Requirements Tracker",
+          "publisher": "KFF",
+          "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview",
+          "as_of": "June 2026",
+          "access_class": "public"
+        }
+      },
+      "specific_facts": [
+        {
+          "fact": "Work requirements apply to approximately 43 state Medicaid agencies.",
+          "value": "43",
+          "fact_type": "number",
+          "source": { "name": "KFF Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview", "as_of": "June 2026", "access_class": "public" }
+        },
+        {
+          "fact": "HMA published an issue brief interpreting the interim final rule on June 5, 2026.",
+          "value": "June 5, 2026",
+          "fact_type": "event",
+          "source": { "name": "HMA issue brief on the Medicaid Community Engagement Interim Final Rule", "publisher": "Health Management Associates (HMA)", "url": "https://www.healthmanagement.com", "as_of": "June 5, 2026", "access_class": "vendor_published" }
+        }
+      ],
+      "data_sources": [
+        { "name": "KFF Medicaid Work Requirements Tracker", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview", "signal": "Per-state implementation status.", "access": "Free, no login." }
+      ],
+      "buyer_motivation": "A missed deadline risks federal match funds.",
+      "viability_scores": { "urgency": 5, "observability": 4, "value_prop_fit": 5, "buyer_resonance": 4, "market_density": 3 },
+      "acv_range": "$250K to $2M+",
+      "pvp_angle": "We can help you hit the work-requirements deadline. Want to talk?"
+    }
+  ],
+  "verdict": {
+    "rating": "Moderate Fit",
+    "reasons": ["Statutory forcing function is real, but the artifact carries thin public specifics for this segment."],
+    "recommended_segment_id": "gold-thin-evidence",
+    "confidence": "Medium"
+  }
+}

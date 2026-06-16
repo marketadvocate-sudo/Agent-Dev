@@ -1,0 +1,25 @@
+{
+  "mwr_version": "1.3",
+  "source_artifact": {
+    "source_agent": "Hand-filled (standalone path)",
+    "schema_version": "1.0",
+    "generated_at": "2026-06-16T00:00:00Z",
+    "company": "Health Management Associates (HMA)"
+  },
+  "scope_used": "Gold",
+  "override": false,
+  "segment_verdicts": [
+    {
+      "segment_id": "gold-thin-evidence",
+      "tier": "Gold",
+      "name": "The Thin Evidence Cohort",
+      "recommended": true,
+      "pvp_achievable": "no",
+      "gap": {
+        "failed_standards": [6, 7],
+        "what_is_missing": "The segment carries only one public-classed specific_fact, a bare number (43 states). Its other fact, the June 5, 2026 HMA issue brief, is vendor_published and self-cited, so it earns no credit for Standards 3, 6, or 7. With a single bare quantity and no public name, location, or event anchor, the exemplar cannot span fact_types (Standard 7 type-span rule fails) and cannot build an information asymmetry from public data the buyer had not connected (Standard 6).",
+        "input_that_would_close_it": "Add at least one more public-classed specific_fact of type name, location, or event, drawn from an independent source. For example a named state's implementation status from the public KFF tracker (a name), or the June 1, 2026 CMS interim final rule (a public event) traced to the Federal Register rather than to the HMA brief. One named entity plus the existing dated quantity would clear the type-span and seed a public asymmetry."
+      }
+    }
+  ]
+}

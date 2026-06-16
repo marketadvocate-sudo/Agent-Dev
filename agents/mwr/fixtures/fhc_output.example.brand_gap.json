@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "source_agent": "Hand-filled (standalone path)",
+  "generated_at": "2026-06-16T00:00:00Z",
+  "brand_profile": {
+    "company": "Health Management Associates (HMA)",
+    "url": "https://www.healthmanagement.com",
+    "product": "Independent national research and consulting firm in publicly funded healthcare.",
+    "value_prop": "",
+    "category": "Healthcare policy and management consulting",
+    "differentiator": "Consultants who came directly from Medicaid director and senior policy roles.",
+    "buyer_titles": ["State Medicaid Director"],
+    "lead_vertical": "Medicaid"
+  },
+  "segments": [
+    {
+      "segment_id": "gold-january-sprinters",
+      "tier": "Gold",
+      "name": "The January Sprinters",
+      "recommended": true,
+      "sector": "Medicaid",
+      "edp": {
+        "signal": "A state's implementation status on the KFF Work Requirements Tracker.",
+        "source": {
+          "name": "KFF Medicaid Work Requirements Tracker",
+          "publisher": "KFF",
+          "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview",
+          "as_of": "June 2026",
+          "access_class": "public"
+        }
+      },
+      "specific_facts": [
+        {
+          "fact": "Nebraska was the first state to begin enforcing federal work requirements early, starting May 1, 2026.",
+          "value": "Nebraska",
+          "fact_type": "name",
+          "source": { "name": "KFF Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview", "as_of": "June 2026", "access_class": "public" }
+        },
+        {
+          "fact": "Work requirements apply to approximately 43 state Medicaid agencies on the same January 1, 2027 deadline.",
+          "value": "43",
+          "fact_type": "number",
+          "source": { "name": "KFF Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview", "as_of": "June 2026", "access_class": "public" }
+        }
+      ],
+      "data_sources": [
+        { "name": "KFF Medicaid Work Requirements Tracker", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview", "signal": "Per-state implementation status.", "access": "Free, no login." }
+      ],
+      "viability_scores": { "urgency": 5, "observability": 5, "value_prop_fit": 5, "buyer_resonance": 5, "market_density": 3 }
+    }
+  ],
+  "verdict": {
+    "rating": "Strong Fit",
+    "reasons": ["Strong segment data, but the brand profile is missing its value proposition."],
+    "recommended_segment_id": "gold-january-sprinters",
+    "confidence": "High"
+  }
+}

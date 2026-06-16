@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "source_agent": "Hand-filled (standalone path)",
+  "generated_at": "2026-06-16T00:00:00Z",
+  "brand_profile": {
+    "company": "Health Management Associates (HMA)",
+    "url": "https://www.healthmanagement.com",
+    "product": "Independent national research and consulting firm in healthcare, with emphasis on Medicaid, Medicare, and other publicly funded healthcare programs.",
+    "value_prop": "Insider-practitioner guidance on the hardest policy, regulatory, and operational challenges in publicly funded healthcare, delivered by people who have held the buyer's exact job.",
+    "category": "Healthcare policy and management consulting",
+    "differentiator": "HMA's consultants came directly from roles as Medicaid directors, state and federal policy leads, and C-suite executives of health plans, so they have set and defended Medicaid rates from inside agencies and MCOs.",
+    "buyer_titles": ["Health plan CFO", "Chief Actuary", "VP of Medicaid Markets"],
+    "lead_vertical": "Medicaid",
+    "company_stage": "Mature private firm, PE-backed.",
+    "estimated_acv": "$100K to $500K+ per project."
+  },
+  "segments": [
+    {
+      "segment_id": "silver-margin-bleed-mcos",
+      "tier": "Silver",
+      "name": "The Margin Bleed MCOs",
+      "recommended": true,
+      "sector": "Medicaid",
+      "pain_buyer_perspective": "A Medicaid MCO finance executive is watching medical loss ratios that do not close while the expansion population that carries premium revenue is about to shrink.",
+      "systemic_condition": "Acuity rose from unwinding, rates did not keep pace, and H.R. 1 now threatens the expansion population plans depend on. Rate development for 2027 is underway on assumptions that are already moving.",
+      "edp": {
+        "signal": "Public earnings filings naming a shrinking expansion book and an elevated medical loss ratio.",
+        "source": {
+          "name": "SEC EDGAR 10-Q and 10-K filings",
+          "publisher": "U.S. Securities and Exchange Commission (SEC)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+          "as_of": "Quarterly, current",
+          "access_class": "public"
+        }
+      },
+      "specific_facts": [
+        {
+          "fact": "Molina Healthcare disclosed in its Form 10-Q an estimated 15% to 20% enrollment reduction across roughly 1.3 million expansion members.",
+          "value": "Molina Healthcare",
+          "fact_type": "name",
+          "source": { "name": "Molina Healthcare Form 10-Q", "publisher": "Molina Healthcare (SEC filing)", "url": "https://www.sec.gov/cgi-bin/browse-edgar", "as_of": "2025", "access_class": "public" }
+        },
+        {
+          "fact": "Molina reported a medical loss ratio of 93.5%, above the level investors and analysts target.",
+          "value": "93.5%",
+          "fact_type": "number",
+          "source": { "name": "Centene and Molina earnings disclosures", "publisher": "Centene and Molina (SEC filings)", "url": "https://www.sec.gov/cgi-bin/browse-edgar", "as_of": "2025", "access_class": "public" }
+        },
+        {
+          "fact": "On July 4, 2025, H.R. 1 (Public Law 119-21) was enacted, conditioning Medicaid expansion eligibility on work requirements.",
+          "value": "July 4, 2025",
+          "fact_type": "event",
+          "source": { "name": "H.R. 1 (Public Law 119-21)", "publisher": "U.S. Congress", "url": "https://www.congress.gov", "as_of": "2025", "access_class": "public" }
+        },
+        {
+          "fact": "67% of Medicaid health plans received rate adjustments or additional state funding for 2025 rates.",
+          "value": "67%",
+          "fact_type": "number",
+          "source": { "name": "Medicaid MCO Demographics Fact Sheet", "publisher": "Institute for Medicaid Innovation (IMI)", "url": "https://www.medicaidinnovation.org", "as_of": "2025", "access_class": "public" }
+        }
+      ],
+      "data_sources": [
+        { "name": "SEC EDGAR", "url": "https://www.sec.gov/cgi-bin/browse-edgar", "signal": "MCO parent disclosures of rate inadequacy by state market.", "access": "Free." },
+        { "name": "KFF/HMA Annual Survey of State Medicaid Officials", "signal": "Director-level views on rate adequacy.", "access": "In-house to HMA." }
+      ],
+      "buyer_motivation": "Rate development for 2027 begins in Q3 2026 in most states, putting this segment at peak receptivity through Q4 2026.",
+      "viability_scores": { "urgency": 4, "observability": 4, "value_prop_fit": 4, "buyer_resonance": 3, "market_density": 4 },
+      "segment_size": { "organizations": 200, "contacts_per_org": 4, "total_contacts": 800, "decision_maker_titles": ["CFO", "Chief Actuary", "VP of Medicaid Markets"] },
+      "acv_range": "$100K to $500K+",
+      "pvp_angle": "Based on our annual survey we can show which state markets are most misaligned on rate adequacy. Would it be useful to see where your markets sit on that map?"
+    }
+  ],
+  "verdict": {
+    "rating": "Moderate Fit",
+    "reasons": ["Rate adequacy stress is visible in public filings.", "H.R. 1 is a statutory forcing function on the expansion population."],
+    "recommended_segment_id": "silver-margin-bleed-mcos",
+    "confidence": "Medium"
+  }
+}
