@@ -1,0 +1,310 @@
+{
+  "schema_version": "1.0",
+  "source_agent": "FHC v0.5 Beta",
+  "generated_at": "2026-06-15T00:00:00Z",
+  "brand_profile": {
+    "company": "Health Management Associates (HMA)",
+    "url": "https://www.healthmanagement.com",
+    "product": "Independent national research and consulting firm in healthcare, with emphasis on Medicaid, Medicare, and other publicly funded healthcare programs. Provides technical assistance, decision support, and policy and operational expertise.",
+    "value_prop": "Insider-practitioner guidance on the hardest policy, regulatory, and operational challenges in publicly funded healthcare, delivered by people who have held the buyer's exact job.",
+    "category": "Healthcare policy and management consulting",
+    "differentiator": "HMA's consultants came directly from roles as Medicaid directors, state and federal policy leads, and C-suite executives of hospitals, health systems, and managed care organizations. Insider-practitioner credibility that pure strategy firms cannot match.",
+    "buyer_titles": [
+      "State Medicaid Director",
+      "State health agency leader",
+      "Health plan CMO",
+      "Health plan CFO",
+      "VP Strategy",
+      "Hospital or health system C-suite",
+      "Life sciences market access lead"
+    ],
+    "lead_vertical": "Medicaid",
+    "company_stage": "Mature private firm, PE-backed (BPOC), ~750 consultants across 28 offices, estimated revenue ~$148M, newly stood-up growth function under first-ever Chief Growth Officer.",
+    "estimated_acv": "Not publicly disclosed. Category engagements typically $50K to $500K+ per project; pilot economics $10K per segment over 90 days; state retainers anchor the higher end."
+  },
+  "industry_analysis": {
+    "macro_moment": "The healthcare consulting market is in a period of compounding regulatory, financial, and policy disruption hitting all three of HMA's practice areas at once. Demand is acute, deadline-driven, and compliance-triggered rather than cyclical.",
+    "forces": [
+      {
+        "force_id": "F1",
+        "name": "Medicaid work requirements hard deadline",
+        "sector": "Medicaid",
+        "description": "The 2025 reconciliation law conditions Medicaid eligibility for the ACA expansion group on work requirements starting January 1, 2027, operative for roughly 43 states. Implementation burden falls on state Medicaid agencies."
+      },
+      {
+        "force_id": "F2",
+        "name": "Enrollment unwinding and MCO margin collapse",
+        "sector": "Medicaid",
+        "description": "Acuity increases from continuous eligibility unwinding are outpacing capitation rates, compressing MCO margins."
+      },
+      {
+        "force_id": "F5",
+        "name": "Hospital price transparency enforcement acceleration",
+        "sector": "Providers",
+        "description": "CMS fined 10 hospitals in 2025, more than double the prior pace. New 2026 rules add a CEO attestation requirement creating named-executive accountability."
+      }
+    ]
+  },
+  "segments": [
+    {
+      "segment_id": "gold-january-sprinters",
+      "tier": "Gold",
+      "name": "The January Sprinters",
+      "recommended": true,
+      "sector": "Medicaid",
+      "pain_buyer_perspective": "A state Medicaid director is behind on federal guidance she has not received yet, her IT vendor just repriced her, and she needs someone who has stood inside a state Medicaid agency before. The policy change is an operational emergency with a statutory deadline.",
+      "systemic_condition": "A statutory forcing function with a broken timeline: HHS guidance due June 1, 2026, member outreach required between June 30 and August 31, 2026, systems live before January 1, 2027. The federal guidance vacuum compounds staff capacity, cost, and system-readiness pressure simultaneously across all affected states.",
+      "edp": {
+        "signal": "A state's implementation status on the KFF Work Requirements Tracker. States with no declared implementation path are the highest-urgency targets.",
+        "source": {
+          "name": "KFF Medicaid Work Requirements Tracker",
+          "publisher": "KFF",
+          "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview",
+          "as_of": "Updated continuously, current as of June 2026",
+          "access_class": "public"
+        }
+      },
+      "specific_facts": [
+        {
+          "fact": "Work requirements apply to approximately 43 state Medicaid agencies, all on the same January 1, 2027 deadline.",
+          "value": "43",
+          "fact_type": "number",
+          "source": { "name": "KFF Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview", "as_of": "June 2026", "access_class": "public" }
+        },
+        {
+          "fact": "States must conduct member outreach between June 30 and August 31, 2026, with systems operational before then.",
+          "value": "August 31, 2026",
+          "fact_type": "date",
+          "source": { "name": "2025 reconciliation law (Public Law 119-21)", "publisher": "U.S. Congress", "url": "https://www.congress.gov", "as_of": "2026", "access_class": "public" }
+        },
+        {
+          "fact": "On June 1, 2026, CMS issued an interim final rule adopting a restrictive definition of medical frailty that differs from states' early expectations, resetting exemption assumptions.",
+          "value": "June 1, 2026",
+          "fact_type": "event",
+          "source": { "name": "Interim Final Rule on Medicaid Work Requirements", "publisher": "Centers for Medicare & Medicaid Services (CMS)", "url": "https://www.federalregister.gov", "as_of": "June 1, 2026", "access_class": "public" }
+        },
+        {
+          "fact": "Nebraska was the first state to begin enforcing federal work requirements early through a state plan amendment, starting May 1, 2026.",
+          "value": "Nebraska",
+          "fact_type": "name",
+          "source": { "name": "KFF Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview", "as_of": "June 2026", "access_class": "public" }
+        },
+        {
+          "fact": "State IT cost estimates for Medicaid work requirements run into the tens of millions: Wisconsin near $6 million for a pair of system changes, Iowa at least $20 million.",
+          "value": "$20 million",
+          "fact_type": "amount",
+          "source": { "name": "State budget and system-change filings (Wisconsin, Iowa)", "publisher": "State of Wisconsin and State of Iowa", "url": "https://dhs.wisconsin.gov", "as_of": "2026", "access_class": "public" }
+        },
+        {
+          "fact": "HMA published an issue brief on the Medicaid Community Engagement Interim Final Rule on June 5, 2026.",
+          "value": "June 5, 2026",
+          "fact_type": "event",
+          "source": { "name": "HMA issue brief on the Medicaid Community Engagement Interim Final Rule", "publisher": "Health Management Associates (HMA)", "url": "https://www.healthmanagement.com", "as_of": "June 5, 2026", "access_class": "vendor_published" }
+        }
+      ],
+      "data_sources": [
+        {
+          "name": "KFF Medicaid Work Requirements Tracker",
+          "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview",
+          "signal": "Per-state implementation status, waiver filings, declared timelines. Non-movers are highest urgency.",
+          "access": "Free, no login, updated continuously."
+        },
+        {
+          "name": "KFF/HMA Annual Survey of State Medicaid Officials",
+          "signal": "Director-level responses on which states feel most unprepared and resource-constrained. Proprietary first-party asset.",
+          "access": "In-house to HMA. Fielded January to March 2026, 49 states plus DC responding."
+        },
+        {
+          "name": "SAM.gov Contract Awards",
+          "url": "https://sam.gov/contracting",
+          "signal": "Which states have active Medicaid consulting contracts, who holds them, and when they expire. Whitespace and displacement signal.",
+          "access": "Free, account required."
+        }
+      ],
+      "buyer_motivation": "Urgency is existential. A state missing the January 1, 2027 deadline faces federal enforcement risk, potential loss of federal match funds, and political exposure. Most states will use existing IT vendors but still need a policy navigation partner who is not the IT vendor. That is HMA's lane.",
+      "viability_scores": {
+        "urgency": 5,
+        "observability": 5,
+        "value_prop_fit": 5,
+        "buyer_resonance": 5,
+        "market_density": 3
+      },
+      "segment_size": {
+        "organizations": 43,
+        "contacts_per_org": 4,
+        "total_contacts": 172,
+        "decision_maker_titles": [
+          "State Medicaid Director",
+          "Deputy Director for Policy",
+          "Deputy Director for Operations",
+          "Chief Information Officer"
+        ]
+      },
+      "acv_range": "$250K to $2M+",
+      "pvp_angle": "We surveyed your peers. Here is what the states closest to implementation are doing differently than the ones who are not. Would a 20-minute call to walk you through the findings be useful? Anchored to HMA's June 5 issue brief on the interim final rule as the door-opener."
+    },
+    {
+      "segment_id": "silver-margin-bleed-mcos",
+      "tier": "Silver",
+      "name": "The Margin Bleed MCOs",
+      "recommended": false,
+      "sector": "Medicaid / Providers",
+      "pain_buyer_perspective": "A Medicaid MCO finance executive is watching medical loss ratios that do not close. Enrollment unwinding left a sicker population than the rates assumed, and the gap is a monthly compounding loss.",
+      "systemic_condition": "Acuity rose from unwinding, rates did not keep pace, and H.R. 1 now threatens the expansion population that plans depend on for premium revenue. Medicaid cost per enrollee grew 16% in 2025.",
+      "edp": {
+        "signal": "Public earnings filings naming specific state markets as underperforming on rate adequacy.",
+        "source": {
+          "name": "SEC EDGAR 10-Q and 10-K filings",
+          "publisher": "U.S. Securities and Exchange Commission (SEC)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+          "as_of": "Quarterly, current",
+          "access_class": "public"
+        }
+      },
+      "specific_facts": [
+        {
+          "fact": "Molina disclosed in its Form 10-Q an estimated 15% to 20% enrollment reduction on 1.3 million members in its expansion population due to H.R. 1.",
+          "value": "15% to 20%",
+          "fact_type": "number",
+          "source": { "name": "Molina Healthcare Form 10-Q", "publisher": "Molina Healthcare (SEC filing)", "url": "https://www.sec.gov/cgi-bin/browse-edgar", "as_of": "2025", "access_class": "public" }
+        },
+        {
+          "fact": "Centene and Molina reported MLRs of 93.0% and 93.5%, higher than investors and analysts target.",
+          "value": "93.5%",
+          "fact_type": "number",
+          "source": { "name": "Centene and Molina earnings disclosures", "publisher": "Centene and Molina (SEC filings)", "url": "https://www.sec.gov/cgi-bin/browse-edgar", "as_of": "2025", "access_class": "public" }
+        },
+        {
+          "fact": "67% of Medicaid health plans received rate adjustments or additional state funding for 2025 rates, underscoring ongoing fiscal challenges.",
+          "value": "67%",
+          "fact_type": "number",
+          "source": { "name": "Medicaid MCO Demographics Fact Sheet", "publisher": "Institute for Medicaid Innovation (IMI)", "url": "https://www.medicaidinnovation.org", "as_of": "2025", "access_class": "public" }
+        }
+      ],
+      "data_sources": [
+        {
+          "name": "SEC EDGAR",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+          "signal": "MCO parent disclosures of rate inadequacy by state market.",
+          "access": "Free."
+        },
+        {
+          "name": "KFF 50-State Medicaid Budget Survey",
+          "signal": "Capitation rate adequacy by state. Co-produced with HMA and NAMD.",
+          "access": "In-house to HMA."
+        }
+      ],
+      "buyer_motivation": "MCOs are actively renegotiating state contracts now. Rate development for 2027 begins in Q3 2026 in most states, putting this segment at peak receptivity through Q4 2026.",
+      "viability_scores": {
+        "urgency": 4,
+        "observability": 4,
+        "value_prop_fit": 4,
+        "buyer_resonance": 3,
+        "market_density": 4
+      },
+      "segment_size": {
+        "organizations": 200,
+        "contacts_per_org": 4,
+        "total_contacts": 800,
+        "decision_maker_titles": [
+          "VP of Medicaid Markets",
+          "CFO",
+          "Chief Actuary",
+          "VP of Government Affairs"
+        ]
+      },
+      "acv_range": "$100K to $500K+",
+      "pvp_angle": "We analyzed which states' capitation rates are most misaligned with current acuity data, and which state directors are most open to rate amendment requests based on our annual survey. Would it be useful to see where your state markets sit on that map?"
+    },
+    {
+      "segment_id": "bronze-warning-notice-window",
+      "tier": "Bronze",
+      "name": "The Warning Notice Window",
+      "recommended": false,
+      "sector": "Providers",
+      "pain_buyer_perspective": "A hospital CFO received a CMS corrective action plan request, not yet a fine. She has 45 days to respond and 90 days to reach full compliance, and the 2026 rule changed what compliant means. The new CEO attestation makes it a personal liability event for a named executive.",
+      "systemic_condition": "Enforcement is accelerating materially. The 2026 rule requires actual dollar amounts and a written CEO attestation that posted prices are true, accurate, and complete, the sharpest shift in enforcement posture since 2021.",
+      "edp": {
+        "signal": "A hospital named with an open case (warning notice or corrective action plan) in the CMS Hospital Price Transparency Enforcement dataset.",
+        "source": {
+          "name": "CMS Hospital Price Transparency Enforcement Activities and Outcomes Dataset",
+          "publisher": "Centers for Medicare & Medicaid Services (CMS)",
+          "url": "https://data.cms.gov/provider-characteristics/hospitals-and-other-facilities/hospital-price-transparency-enforcement-activities-and-outcomes",
+          "as_of": "Updated monthly, ~288 open cases as of June 2025",
+          "access_class": "public"
+        }
+      },
+      "specific_facts": [
+        {
+          "fact": "As of June 2025, 288 hospitals have an open price transparency enforcement case in the CMS dataset.",
+          "value": "288",
+          "fact_type": "number",
+          "source": { "name": "CMS Hospital Price Transparency Enforcement Dataset", "publisher": "Centers for Medicare & Medicaid Services (CMS)", "url": "https://data.cms.gov", "as_of": "June 2025", "access_class": "public" }
+        },
+        {
+          "fact": "CMS fined 10 hospitals in 2025, up from 3 in 2024, with fines ranging from $32,301 to $309,738 in a single cycle.",
+          "value": "$309,738",
+          "fact_type": "amount",
+          "source": { "name": "CMS enforcement records", "publisher": "Centers for Medicare & Medicaid Services (CMS)", "url": "https://www.cms.gov", "as_of": "2025", "access_class": "public" }
+        },
+        {
+          "fact": "Hospitals out of compliance must submit a corrective action plan within 45 days and reach full compliance within 90 days.",
+          "value": "45 days",
+          "fact_type": "number",
+          "source": { "name": "Hospital Price Transparency rule (45 CFR 180)", "publisher": "Centers for Medicare & Medicaid Services (CMS)", "url": "https://www.cms.gov", "as_of": "2026", "access_class": "public" }
+        }
+      ],
+      "data_sources": [
+        {
+          "name": "CMS Hospital Price Transparency Enforcement Dataset",
+          "url": "https://data.cms.gov",
+          "signal": "Named hospitals with open warning notices and corrective action plans.",
+          "access": "Free, downloadable, updated monthly."
+        },
+        {
+          "name": "CMS Provider of Services (POS) File",
+          "url": "https://data.cms.gov",
+          "signal": "Bed count, ownership, geography for enrichment and prioritization.",
+          "access": "Free, downloadable, updated quarterly."
+        },
+        {
+          "name": "MSRB EMMA",
+          "url": "https://emma.msrb.org",
+          "signal": "Material event notices indicating financial covenant violation or downgrade. Compound signal with enforcement.",
+          "access": "Free, no login."
+        }
+      ],
+      "buyer_motivation": "The buyer is responding to a named enforcement action with a deadline, not shopping for consulting. The CEO attestation requirement raises it to a board-level accountability event.",
+      "viability_scores": {
+        "urgency": 5,
+        "observability": 5,
+        "value_prop_fit": 3,
+        "buyer_resonance": 3,
+        "market_density": 4
+      },
+      "segment_size": {
+        "organizations": 288,
+        "contacts_per_org": 4,
+        "total_contacts": 1152,
+        "decision_maker_titles": [
+          "CFO",
+          "Chief Compliance Officer",
+          "CEO",
+          "VP Revenue Cycle"
+        ]
+      },
+      "acv_range": "$50K to $200K",
+      "pvp_angle": "CMS's enforcement dataset shows your hospital has an open corrective action plan case. The new CEO attestation requirement means compliance is now a named-executive event. We have helped hospitals close their CMS cases within the 90-day window. Would 20 minutes to walk through what that process looks like be useful?"
+    }
+  ],
+  "verdict": {
+    "rating": "Strong Fit",
+    "reasons": [
+      "The public data is live, named, and updated in real time: the KFF Work Requirements Tracker and the CMS enforcement dataset are two independent government-maintained real-time signals.",
+      "The forcing function is statutory, not cyclical. The January 1, 2027 deadline is embedded in law, so buyers are already mid-conversation internally.",
+      "HMA's credential advantage is structural and already publicly activated through the June 5 issue brief and the KFF/NAMD survey co-production."
+    ],
+    "recommended_segment_id": "gold-january-sprinters",
+    "confidence": "High"
+  }
+}

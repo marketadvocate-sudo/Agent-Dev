@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cannonballgtm.com/contracts/mwr_output.schema.json",
+  "title": "MWR Output Artifact",
+  "description": "The complete, structured output of the Messages Worth Receiving (MWR) gate. MWR consumes one FHC output artifact and returns, per in-scope segment, a binary verdict: can a PVP-grade message be built from this segmentation work, yes or no. 'yes' carries an exemplar message as evidence; 'no' carries a named gap. Governed by MWR_CONSTITUTION.md v1.3.",
+  "type": "object",
+  "required": ["mwr_version", "source_artifact", "scope_used", "segment_verdicts"],
+  "additionalProperties": false,
+  "properties": {
+    "mwr_version": {
+      "type": "string",
+      "description": "Version of the MWR constitution this run was graded against. Example: 1.3",
+      "examples": ["1.3"]
+    },
+    "source_artifact": {
+      "type": "object",
+      "description": "Identifying metadata copied from the consumed FHC artifact, so a verdict is traceable to the exact input it judged.",
+      "required": ["source_agent", "schema_version"],
+      "additionalProperties": false,
+      "properties": {
+        "source_agent": { "type": "string", "description": "FHC artifact's source_agent. Example: FHC v0.5 Beta" },
+        "schema_version": { "type": "string", "description": "FHC artifact's schema_version." },
+        "generated_at": { "type": "string", "description": "FHC artifact's generated_at, if present." },
+        "company": { "type": "string", "description": "brand_profile.company of the consumed artifact." }
+      }
+    },
+    "scope_used": {
+      "type": "string",
+      "enum": ["Gold", "Silver", "Bronze"],
+      "description": "Which tier the gate ran over. Gold by default; Silver or Bronze only under explicit override, and override replaces Gold scope, it does not add to it (constitution Section 3)."
+    },
+    "override": {
+      "type": "boolean",
+      "description": "True when the user overrode the default Gold scope. When true, every entry in segment_verdicts that carries an exemplar must carry override_warning.",
+      "default": false
+    },
+    "run_decline": {
+      "type": "object",
+      "description": "Present ONLY for a run-level (brand-profile) decline. Per constitution Section 6: when brand_profile.value_prop or differentiator is empty, every segment fails Standard 2 identically, so the gate returns ONE run-level decline instead of N identical per-segment 'no's. When present, segment_verdicts is empty.",
+      "required": ["reason", "missing_fields", "input_that_would_close_it"],
+      "additionalProperties": false,
+      "properties": {
+        "reason": { "type": "string", "description": "Plain statement of the brand-level gap. Example: brand profile incomplete: value_prop missing, no segment can clear Standard 2 until supplied." },
+        "missing_fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "enum": ["value_prop", "differentiator"] },
+          "description": "Which MWR-critical brand_profile fields are empty."
+        },
+        "input_that_would_close_it": { "type": "string" }
+      }
+    },
+    "segment_verdicts": {
+      "type": "array",
+      "description": "One verdict per in-scope segment. Empty when run_decline is present.",
+      "items": { "$ref": "#/$defs/segment_verdict" }
+    }
+  },
+  "allOf": [
+    {
+      "description": "Either the run declined at the brand level (run_decline present, no segment verdicts) or it produced per-segment verdicts (no run_decline).",
+      "oneOf": [
+        {
+          "required": ["run_decline"],
+          "properties": { "segment_verdicts": { "maxItems": 0 } }
+        },
+        {
+          "not": { "required": ["run_decline"] },
+          "properties": { "segment_verdicts": { "minItems": 1 } }
+        }
+      ]
+    }
+  ],
+  "$defs": {
+    "standard_check": {
+      "type": "object",
+      "description": "The grader's yes/no on a single Gold Standard. No partial credit. Every 'met: true' must cite the basis that earns it; for Standards 3, 6, and 7 the basis must rest on a 'public'-classed source that survives the two mechanical hardening checks.",
+      "required": ["standard", "name", "met", "basis"],
+      "additionalProperties": false,
+      "properties": {
+        "standard": { "type": "integer", "minimum": 1, "maximum": 7 },
+        "name": {
+          "type": "string",
+          "enum": [
+            "Independently useful",
+            "Relates to the value prop",
+            "Based on public data",
+            "Translates to meaningful insight",
+            "Goes beyond pain identification",
+            "Creates information asymmetry",
+            "Concrete and specific"
+          ]
+        },
+        "met": { "type": "boolean" },
+        "basis": {
+          "type": "string",
+          "description": "On 'met: true', the specific fact/field (and its access_class where the standard requires public) that earns the yes. On 'met: false', why it misses."
+        }
+      }
+    },
+    "segment_verdict": {
+      "type": "object",
+      "required": ["segment_id", "tier", "name", "pvp_achievable"],
+      "additionalProperties": false,
+      "properties": {
+        "segment_id": { "type": "string" },
+        "tier": { "type": "string", "enum": ["Gold", "Silver", "Bronze"] },
+        "name": { "type": "string" },
+        "recommended": { "type": "boolean", "description": "Carried through from the FHC segment, if present." },
+        "pvp_achievable": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "The gate's binary verdict for this segment. 'yes' requires exemplar; 'no' requires gap."
+        },
+        "revised": {
+          "type": "boolean",
+          "description": "True only when pvp_achievable is 'yes' AND the message needed the single revision pass to clear (it cleared on the second attempt, not the first). Constitution Section 7.",
+          "default": false
+        },
+        "exemplar": { "$ref": "#/$defs/exemplar" },
+        "gap": { "$ref": "#/$defs/gap" }
+      },
+      "allOf": [
+        {
+          "description": "A 'yes' carries an exemplar and no gap.",
+          "if": { "properties": { "pvp_achievable": { "const": "yes" } } },
+          "then": { "required": ["exemplar"], "not": { "required": ["gap"] } }
+        },
+        {
+          "description": "A 'no' carries a gap and no exemplar.",
+          "if": { "properties": { "pvp_achievable": { "const": "no" } } },
+          "then": { "required": ["gap"], "not": { "required": ["exemplar"] } }
+        }
+      ]
+    },
+    "exemplar": {
+      "type": "object",
+      "description": "The cohort-level evidence message proving a PVP is achievable. NOT a deliverable for scaled use. No merge fields, no account personalization, no CTA, no em-dashes, Cannonball voice. Exactly one subject line and one eyebrow line.",
+      "required": ["subject_line", "eyebrow_line", "message_body", "facts_used", "seven_standard_check"],
+      "additionalProperties": false,
+      "properties": {
+        "subject_line": { "type": "string", "description": "Exactly one. No em-dashes." },
+        "eyebrow_line": { "type": "string", "description": "Exactly one (preview / eyebrow line). No em-dashes." },
+        "message_body": { "type": "string", "description": "The one-step message. Ends on the value, carries no CTA, no em-dashes." },
+        "facts_used": {
+          "type": "array",
+          "description": "The specific_fact values the exemplar concretely uses, with the access_class of each cited source. Lets the reviewer confirm Standard 7 type-spanning and that Standards 3/6/7 rest only on public sources.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["value", "fact_type", "source_name", "publisher", "access_class"],
+            "additionalProperties": false,
+            "properties": {
+              "value": { "type": "string" },
+              "fact_type": { "type": "string", "enum": ["number", "date", "name", "location", "event", "amount"] },
+              "source_name": { "type": "string" },
+              "publisher": { "type": "string" },
+              "access_class": { "type": "string", "enum": ["public", "vendor_published", "proprietary"] }
+            }
+          }
+        },
+        "seven_standard_check": {
+          "type": "array",
+          "description": "All seven standards, in order, each yes/no with basis. All seven must be met for the parent verdict to be 'yes'.",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": { "$ref": "#/$defs/standard_check" }
+        },
+        "override_warning": {
+          "type": "string",
+          "description": "Required when the run was a Silver/Bronze override. The constitution Section 3 trade-off warning, attached per message."
+        }
+      }
+    },
+    "gap": {
+      "type": "object",
+      "description": "The gate's 'no' for a segment. A first-class output of equal standing to an exemplar, not an error. Names which standard(s) cannot be met and what input would close the gap.",
+      "required": ["failed_standards", "what_is_missing", "input_that_would_close_it"],
+      "additionalProperties": false,
+      "properties": {
+        "failed_standards": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "integer", "minimum": 1, "maximum": 7 },
+          "description": "The Gold Standard numbers this segment cannot clear (after the single revision pass, if one was attempted)."
+        },
+        "what_is_missing": { "type": "string", "description": "The concrete gap in the artifact. Example: specific_facts carries one dated value and no named entity." },
+        "input_that_would_close_it": { "type": "string", "description": "What the user would add to the FHC artifact to flip this to 'yes'." }
+      }
+    }
+  }
+}

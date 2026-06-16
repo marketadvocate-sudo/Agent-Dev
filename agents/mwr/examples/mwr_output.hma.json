@@ -1,0 +1,77 @@
+{
+  "mwr_version": "1.3",
+  "source_artifact": {
+    "source_agent": "FHC v0.5 Beta",
+    "schema_version": "1.0",
+    "generated_at": "2026-06-15T00:00:00Z",
+    "company": "Health Management Associates (HMA)"
+  },
+  "scope_used": "Gold",
+  "override": false,
+  "segment_verdicts": [
+    {
+      "segment_id": "gold-january-sprinters",
+      "tier": "Gold",
+      "name": "The January Sprinters",
+      "recommended": true,
+      "pvp_achievable": "yes",
+      "revised": false,
+      "exemplar": {
+        "subject_line": "Your work-requirements exemption math reset on June 1",
+        "eyebrow_line": "The frailty rule changed the assumptions, and the public tracker shows the spread",
+        "message_body": "On June 1, 2026, CMS issued an interim final rule that narrowed the definition of medical frailty. If your exemption planning predates that rule, the assumptions under it moved, and the public KFF Work Requirements Tracker shows how little room is left to absorb the change.\n\nThat same tracker shows the spread between states. Nebraska has already begun enforcing federal work requirements early, through a state plan amendment effective May 1, 2026, while other states still have no declared implementation path. The gap is widening against a fixed date. All 43 affected states share the same January 1, 2027 deadline, and member outreach has to run between June 30 and August 31, 2026, so the window to build the outreach rather than just plan it is already open.\n\nThe cost side is public too. State system-change filings put Iowa's build at a minimum of $20 million and Wisconsin's near $6 million for a pair of changes. Most states will route that work through the IT vendor they already have. The harder problem sits underneath it: reconciling the new frailty definition with exemption logic, outreach, and eligibility systems before the deadline, which is not work an IT vendor does.\n\nThat is the part where having sat in the chair matters. HMA's consultants came out of state Medicaid director and senior policy roles, so the read on what the interim final rule actually changes, and what a defensible exemption posture looks like under it, comes from people who have had to make that call from inside an agency.",
+        "facts_used": [
+          { "value": "June 1, 2026", "fact_type": "event", "source_name": "Interim Final Rule on Medicaid Work Requirements", "publisher": "Centers for Medicare & Medicaid Services (CMS)", "access_class": "public" },
+          { "value": "Nebraska", "fact_type": "name", "source_name": "KFF Work Requirements Tracker", "publisher": "KFF", "access_class": "public" },
+          { "value": "43", "fact_type": "number", "source_name": "KFF Work Requirements Tracker", "publisher": "KFF", "access_class": "public" },
+          { "value": "August 31, 2026", "fact_type": "date", "source_name": "2025 reconciliation law (Public Law 119-21)", "publisher": "U.S. Congress", "access_class": "public" },
+          { "value": "$20 million", "fact_type": "amount", "source_name": "State budget and system-change filings (Wisconsin, Iowa)", "publisher": "State of Wisconsin and State of Iowa", "access_class": "public" }
+        ],
+        "seven_standard_check": [
+          {
+            "standard": 1,
+            "name": "Independently useful",
+            "met": true,
+            "basis": "Delivers a usable read with no ask: the June 1 frailty rule reset exemption assumptions, the public tracker shows the readiness spread, and the outreach window is already open. The message ends on the value; there is no CTA."
+          },
+          {
+            "standard": 2,
+            "name": "Relates to the value prop",
+            "met": true,
+            "basis": "Closes on HMA's value_prop and differentiator: insider-practitioner guidance from people who held state Medicaid director and senior policy roles, distinguished from the IT vendor who cannot do the policy navigation."
+          },
+          {
+            "standard": 3,
+            "name": "Based on public data",
+            "met": true,
+            "basis": "Every claim traces to a public source surviving the hardening checks: KFF tracker (KFF), CMS interim final rule (CMS, Federal Register), 2025 reconciliation law (U.S. Congress), state system-change filings (WI/IA). The HMA issue brief (vendor_published, self-cited) is deliberately not used."
+          },
+          {
+            "standard": 4,
+            "name": "Translates to meaningful insight",
+            "met": true,
+            "basis": "Not raw data: it turns the June 1 rule plus the tracker into a conclusion the buyer had not drawn, that the exemption math built before June 1 is now wrong and the readiness gap is widening on a fixed clock."
+          },
+          {
+            "standard": 5,
+            "name": "Goes beyond pain identification",
+            "met": true,
+            "basis": "Advances past naming the deadline pain to a specific consequence and frame: the real exposure is the policy navigation under the IT build, on a window that is already open, not the IT spend itself."
+          },
+          {
+            "standard": 6,
+            "name": "Creates information asymmetry",
+            "met": true,
+            "basis": "The asymmetry is the connection across public facts the buyer had not made: the June 1 frailty redefinition (CMS) read against the per-state movement on the KFF tracker (Nebraska live May 1 while non-movers have no path). Built only from public sources; the proprietary KFF/HMA survey and the vendor brief are excluded."
+          },
+          {
+            "standard": 7,
+            "name": "Concrete and specific",
+            "met": true,
+            "basis": "Specifics span five fact_types from public sources and include name/event anchors: Nebraska (name), June 1 2026 (event), 43 (number), August 31 2026 (date), $20 million (amount). Clears the type-spanning rule."
+          }
+        ]
+      }
+    }
+  ]
+}

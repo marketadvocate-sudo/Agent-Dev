@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cannonballgtm.com/contracts/fhc_output.schema.json",
+  "title": "FHC Output Artifact",
+  "description": "The complete, structured output of the Finding Hidden Customers agent. This is the sole accepted input to the MWR agent. FHC produces it; MWR consumes it. Neither agent contains the other. This schema is the federated boundary between them.",
+  "type": "object",
+  "required": ["schema_version", "source_agent", "brand_profile", "segments", "verdict"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Version of this contract the artifact conforms to. Example: 1.0",
+      "examples": ["1.0"]
+    },
+    "source_agent": {
+      "type": "string",
+      "description": "The agent and version that produced this artifact. Example: FHC v0.5 Beta"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of generation. Used by MWR to judge how fresh the underlying signals are."
+    },
+    "brand_profile": {
+      "type": "object",
+      "description": "MWR-CRITICAL. The vendor being sold for. MWR relates every buyer insight back to this value prop. If a field here is empty, MWR cannot satisfy Gold Standard 2 (relates to value prop).",
+      "required": ["company", "value_prop", "category", "differentiator"],
+      "additionalProperties": false,
+      "properties": {
+        "company": { "type": "string" },
+        "url": { "type": "string" },
+        "product": {
+          "type": "string",
+          "description": "What the vendor actually sells, in plain language."
+        },
+        "value_prop": {
+          "type": "string",
+          "description": "MWR-CRITICAL. The core value the vendor delivers. The anchor every message ties back to."
+        },
+        "category": { "type": "string" },
+        "differentiator": {
+          "type": "string",
+          "description": "MWR-CRITICAL. Why this vendor over alternatives. Often the sharpest hook for messaging."
+        },
+        "buyer_titles": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Titles of the people who buy. MWR uses these to pitch the message at the right altitude."
+        },
+        "lead_vertical": { "type": "string" },
+        "company_stage": { "type": "string" },
+        "estimated_acv": { "type": "string" }
+      }
+    },
+    "industry_analysis": {
+      "type": "object",
+      "description": "CONTEXT. The regulatory and market forces behind the segmentation. MWR uses this to ground source claims, not as primary input. Optional but recommended.",
+      "additionalProperties": false,
+      "properties": {
+        "macro_moment": {
+          "type": "string",
+          "description": "One-paragraph statement of the structural shift driving demand."
+        },
+        "forces": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "description"],
+            "additionalProperties": false,
+            "properties": {
+              "force_id": { "type": "string" },
+              "name": { "type": "string" },
+              "sector": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "segments": {
+      "type": "array",
+      "description": "MWR-CRITICAL. The pain-qualified segments. MWR generates messaging for Gold segments by default. Each segment must carry enough structured, sourced specifics for MWR to clear all seven Gold Standards.",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/segment" }
+    },
+    "verdict": {
+      "type": "object",
+      "required": ["rating", "confidence"],
+      "additionalProperties": false,
+      "properties": {
+        "rating": {
+          "type": "string",
+          "enum": ["Strong Fit", "Moderate Fit", "Weak Fit", "No Fit"]
+        },
+        "reasons": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "recommended_segment_id": {
+          "type": "string",
+          "description": "segment_id of the segment FHC recommends leading with."
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["High", "Medium", "Low"]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "source_ref": {
+      "type": "object",
+      "description": "A traceable source. Required wherever a factual claim is made. access_class and publisher are required so the downstream agent never infers public-ness; it reads the fields and applies mechanical checks. FHC sets these at export time, where the methodology context lives.",
+      "required": ["name", "publisher", "access_class"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "publisher": {
+          "type": "string",
+          "description": "The organization that authored or maintains this source. Used to mechanically detect self-citation: a source whose publisher matches brand_profile.company may not be classed 'public'. Examples: KFF, CMS, SEC, Health Management Associates."
+        },
+        "url": { "type": "string" },
+        "as_of": {
+          "type": "string",
+          "description": "When this source was current. Free text or date. Metadata only; drives no automatic freshness rule."
+        },
+        "access_class": {
+          "type": "string",
+          "enum": ["public", "vendor_published", "proprietary"],
+          "description": "public = third-party, neutral, independently verifiable by the buyer (government records, regulatory filings, public trackers, SEC filings). vendor_published = authored or commissioned by the seller and publicly readable (issue briefs, blog posts, the vendor's own survey writeup). proprietary = not publicly available (in-house microdata, private CRM). Only 'public' sources may satisfy Gold Standards 3, 6, and 7. A 'public' source must carry a resolvable url and must not be published by the vendor. See the MWR constitution."
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "access_class": { "const": "public" } } },
+          "then": { "required": ["url"] }
+        }
+      ]
+    },
+    "specific_fact": {
+      "type": "object",
+      "description": "A single concrete, sourced fact. This is the load-bearing unit for Gold Standard 7 (concrete and specific: names, numbers, dates, locations). FHC extracts these from its analysis so MWR does not have to re-derive them from prose and risk fabrication.",
+      "required": ["fact", "fact_type", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "fact": {
+          "type": "string",
+          "description": "The fact as a complete statement. Example: 43 state Medicaid agencies are subject to work requirements starting January 1, 2027."
+        },
+        "value": {
+          "type": "string",
+          "description": "The bare specific, isolated. Example: 43, or January 1 2027, or Nebraska."
+        },
+        "fact_type": {
+          "type": "string",
+          "enum": ["number", "date", "name", "location", "event", "amount"]
+        },
+        "source": { "$ref": "#/$defs/source_ref" }
+      }
+    },
+    "segment": {
+      "type": "object",
+      "required": ["segment_id", "tier", "name", "edp", "specific_facts", "data_sources", "viability_scores"],
+      "additionalProperties": false,
+      "properties": {
+        "segment_id": { "type": "string" },
+        "tier": {
+          "type": "string",
+          "enum": ["Gold", "Silver", "Bronze"]
+        },
+        "name": { "type": "string" },
+        "recommended": {
+          "type": "boolean",
+          "description": "True if FHC flags this segment as the lead recommendation."
+        },
+        "sector": { "type": "string" },
+        "pain_buyer_perspective": {
+          "type": "string",
+          "description": "The pain in the buyer's own frame. Narrative context for MWR's tone, not its facts."
+        },
+        "systemic_condition": {
+          "type": "string",
+          "description": "The structural forcing function behind the pain. Distinguishes systemic from episodic."
+        },
+        "edp": {
+          "type": "object",
+          "description": "MWR-CRITICAL. The Existential Data Point: the single observable public signal that identifies a buyer in this segment. The seed of the information asymmetry (Gold Standard 6).",
+          "required": ["signal", "source"],
+          "additionalProperties": false,
+          "properties": {
+            "signal": {
+              "type": "string",
+              "description": "The single observable signal. Example: state has no declared work-requirements implementation path on the KFF tracker."
+            },
+            "source": { "$ref": "#/$defs/source_ref" }
+          }
+        },
+        "specific_facts": {
+          "type": "array",
+          "description": "MWR-CRITICAL. The concrete, sourced specifics MWR will anchor messaging to. Minimum two recommended. Without these, MWR cannot reliably clear Gold Standard 7 and should decline per its constitution.",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/specific_fact" }
+        },
+        "data_sources": {
+          "type": "array",
+          "description": "The public databases supporting this segment.",
+          "items": {
+            "type": "object",
+            "required": ["name", "signal"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "url": { "type": "string" },
+              "signal": {
+                "type": "string",
+                "description": "What buying signal this source provides."
+              },
+              "access": {
+                "type": "string",
+                "description": "Cost and access notes. Example: Free, no login, updated monthly."
+              }
+            }
+          }
+        },
+        "buyer_motivation": {
+          "type": "string",
+          "description": "Why the buyer acts now. The urgency narrative."
+        },
+        "viability_scores": {
+          "type": "object",
+          "description": "MWR-CRITICAL for scope. value_prop_fit and observability inform whether MWR can build a clearing message. Urgency informs tone.",
+          "required": ["urgency", "observability", "value_prop_fit", "buyer_resonance", "market_density"],
+          "additionalProperties": false,
+          "properties": {
+            "urgency": { "type": "integer", "minimum": 1, "maximum": 5 },
+            "observability": { "type": "integer", "minimum": 1, "maximum": 5 },
+            "value_prop_fit": { "type": "integer", "minimum": 1, "maximum": 5 },
+            "buyer_resonance": { "type": "integer", "minimum": 1, "maximum": 5 },
+            "market_density": { "type": "integer", "minimum": 1, "maximum": 5 }
+          }
+        },
+        "segment_size": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "organizations": { "type": "integer" },
+            "contacts_per_org": { "type": "integer" },
+            "total_contacts": { "type": "integer" },
+            "decision_maker_titles": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "acv_range": { "type": "string" },
+        "pvp_angle": {
+          "type": "string",
+          "description": "FHC's drafted PVP angle for this segment. MWR treats this as a reference starting point, not a finished message. MWR's job is to turn this into messaging that clears all seven standards, or improve on it."
+        }
+      }
+    }
+  }
+}
