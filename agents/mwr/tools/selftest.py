@@ -25,6 +25,20 @@ EX = MWR / "examples"
 
 failures: list[str] = []
 
+# Smoke-test only, NOT the agent's real Stage-1 CTA grader (that is judgment).
+# A question mark, or any of these lowercase asks, flags a likely CTA so an
+# obvious "ask" cannot slip into an exemplar unnoticed.
+CTA_PHRASES = (
+    "let me know", "happy to", "would you", "worth a", "book a", "schedule a",
+    "reach out", "get in touch", "20 minutes", "twenty minutes", "hop on",
+    "set up a call", "grab time", "connect for",
+)
+
+
+def looks_like_cta(body: str) -> bool:
+    low = body.lower()
+    return "?" in body or any(p in low for p in CTA_PHRASES)
+
 
 def check(name: str, cond: bool, detail: str = "") -> None:
     status = "PASS" if cond else "FAIL"
@@ -55,6 +69,7 @@ def main() -> int:
         "fhc_output.example.silver_override.json": [],
         "fhc_output.example.thin.json": [],
         "fhc_output.example.brand_gap.json": [],
+        "fhc_output.example.empty_scope.json": [],
     }
     arts = {}
     for fn in fixtures:
@@ -83,14 +98,35 @@ def main() -> int:
     bg = arts["fhc_output.example.brand_gap.json"]
     check("brand_gap triggers run-level decline", brand_incomplete(bg))
 
+    es = arts["fhc_output.example.empty_scope.json"]
+    check("empty_scope has complete brand profile (not a brand gap)", not brand_incomplete(es))
+    check("empty_scope has no Gold segment (default scope is empty)",
+          not any(s["tier"] == "Gold" for s in es["segments"]))
+    check("empty_scope has a populated non-Gold tier available for override",
+          any(s["tier"] in ("Silver", "Bronze") for s in es["segments"]))
+
     print("\n== Output contract: examples validate ==")
-    outputs = ["hma", "silver_override", "thin", "brand_gap"]
+    outputs = ["hma", "silver_override", "thin", "brand_gap", "empty_scope"]
     outs = {}
     for o in outputs:
         data = json.loads((EX / f"mwr_output.{o}.json").read_text())
         outs[o] = data
         errs = gate.validate_against(gate.MWR_SCHEMA, data)
         check(f"mwr_output.{o}.json conforms to output schema", not errs, "; ".join(errs[:2]))
+
+    print("\n== Run-level decline kinds ==")
+    bg_rd = outs["brand_gap"].get("run_decline", {})
+    check("brand_gap output is kind=brand_gap with missing_fields",
+          bg_rd.get("kind") == "brand_gap" and bool(bg_rd.get("missing_fields")))
+    check("brand_gap output has empty segment_verdicts",
+          outs["brand_gap"].get("segment_verdicts") == [])
+    es_rd = outs["empty_scope"].get("run_decline", {})
+    check("empty_scope output is kind=empty_scope with scoped_tier",
+          es_rd.get("kind") == "empty_scope" and bool(es_rd.get("scoped_tier")))
+    check("empty_scope output carries no missing_fields (not a brand gap)",
+          "missing_fields" not in es_rd)
+    check("empty_scope output has empty segment_verdicts",
+          outs["empty_scope"].get("segment_verdicts") == [])
 
     print("\n== Format + warning invariants on exemplars ==")
     for o, data in outs.items():
@@ -101,7 +137,7 @@ def main() -> int:
                 continue
             text = " ".join([ex["subject_line"], ex["eyebrow_line"], ex["message_body"]])
             check(f"{o}/{v['segment_id']} no em-dash", "—" not in text and "–" not in text)
-            check(f"{o}/{v['segment_id']} no CTA in body", "?" not in ex["message_body"])
+            check(f"{o}/{v['segment_id']} no CTA in body", not looks_like_cta(ex["message_body"]))
             check(f"{o}/{v['segment_id']} override_warning iff override",
                   ("override_warning" in ex) == override)
 

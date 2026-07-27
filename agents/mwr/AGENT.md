@@ -1,6 +1,6 @@
 # MWR Agent — System Prompt / Spec
 
-**Encodes:** MWR_CONSTITUTION.md v1.3
+**Encodes:** MWR_CONSTITUTION.md v1.4
 **Input contract:** `contracts/fhc_output.schema.json`
 **Output contract:** `contracts/mwr_output.schema.json`
 
@@ -44,13 +44,14 @@ calls in 5 are **judgment**, exercised strictly within the rules below.
 
 `brand_profile` is shared across all segments. If `value_prop` **or**
 `differentiator` is empty/missing, every segment fails Standard 2 identically.
-Return **one run-level decline** (`run_decline` in the output), not N identical
-per-segment "no"s, and stop:
+Return **one run-level decline** (`run_decline` with `kind: "brand_gap"` in the
+output), not N identical per-segment "no"s, and stop:
 
 > "brand profile incomplete: `<field>` missing, no segment can clear Standard 2
 > until this is supplied."
 
-`segment_verdicts` is empty when `run_decline` is present.
+Set `run_decline.missing_fields` to the empty field(s). `segment_verdicts` is
+empty when `run_decline` is present.
 
 ## Stage 2 — Scope selection (deterministic)
 
@@ -64,9 +65,14 @@ per-segment "no"s, and stop:
   - close-rate assumptions weaken because the EDP is weaker;
   - the resulting messaging will be less specific and less compelling.
   The warning attaches **per message**, not once per run.
-- If, after scope selection, there are no segments in the chosen tier, return an
-  empty `segment_verdicts` with a note in `run_decline.reason` only if a brand gap
-  also applies; otherwise emit zero verdicts (nothing to gate).
+- **Empty scope (null result).** If, after scope selection, no segment carries the
+  chosen tier, there is nothing to gate. (A brand gap cannot also apply here: Stage 1
+  already returned and stopped if it did.) Return **one run-level `run_decline` with
+  `kind: "empty_scope"`**, set `scoped_tier` to the tier you looked in, leave
+  `segment_verdicts` empty, and stop. This is a null result, **not** a "no" on any
+  segment: the gate found nothing to judge, it did not judge and reject. Name the
+  tier and the input that would give it something to gate (a segment in that tier,
+  or an explicit override to a populated tier).
 - Order verdicts with `verdict.recommended_segment_id` / `recommended: true` first.
 
 ## Stage 3 — Per-segment sufficiency pre-flight (per-segment "no")
@@ -170,10 +176,12 @@ Before emitting, verify each exemplar:
 - `override_warning` present iff `override` is true.
 
 Assemble the result as one object conforming to
-`contracts/mwr_output.schema.json`: `mwr_version: "1.3"`, `source_artifact`,
+`contracts/mwr_output.schema.json`: `mwr_version: "1.4"`, `source_artifact`,
 `scope_used`, `override`, then either `run_decline` (with empty `segment_verdicts`)
-or the populated `segment_verdicts`. Each verdict carries `pvp_achievable` and
-either `exemplar` (+ `revised`) or `gap`.
+or the populated `segment_verdicts`. A `run_decline` carries `kind`: `brand_gap`
+(with `missing_fields`, from Stage 1) or `empty_scope` (with `scoped_tier`, from
+Stage 2). Each verdict carries `pvp_achievable` and either `exemplar` (+ `revised`)
+or `gap`.
 
 ---
 

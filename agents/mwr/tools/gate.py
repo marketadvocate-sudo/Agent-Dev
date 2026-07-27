@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """MWR gate — deterministic harness.
 
-Executes the mechanical, no-judgment portions of MWR_CONSTITUTION.md v1.3:
+Executes the mechanical, no-judgment portions of MWR_CONSTITUTION.md v1.4:
 
   Stage 0  validate the FHC artifact against the input contract
   Stage 1  brand-profile gate (run-level decline)
@@ -109,7 +109,9 @@ def report(args) -> int:
     print(f"\n== Stage 2: scope = {tier} ==")
     segments = [s for s in artifact["segments"] if s.get("tier") == tier]
     if not segments:
-        print(f"  No {tier} segments in scope. Nothing to gate.")
+        print(f"  RUN-LEVEL empty_scope: no {tier} segments in the artifact.")
+        print("  Null result, not a 'no' on any segment. Nothing to gate at this")
+        print(f"  scope. Add a {tier} segment, or override to a populated tier.")
         return 0
     # recommended first
     segments.sort(key=lambda s: not s.get("recommended", False))

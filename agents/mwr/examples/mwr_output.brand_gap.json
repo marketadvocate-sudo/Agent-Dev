@@ -1,5 +1,5 @@
 {
-  "mwr_version": "1.3",
+  "mwr_version": "1.4",
   "source_artifact": {
     "source_agent": "Hand-filled (standalone path)",
     "schema_version": "1.0",
@@ -9,6 +9,7 @@
   "scope_used": "Gold",
   "override": false,
   "run_decline": {
+    "kind": "brand_gap",
     "reason": "Brand profile incomplete: value_prop is empty. brand_profile is shared across all segments, so every segment fails Standard 2 (relates to the value prop) identically. The gate returns one run-level decline rather than one identical no per segment.",
     "missing_fields": ["value_prop"],
     "input_that_would_close_it": "Populate brand_profile.value_prop with the core value HMA delivers (the anchor every message ties back to), then rerun. The segment data itself is strong; only the brand anchor is missing."

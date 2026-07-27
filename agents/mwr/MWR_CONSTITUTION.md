@@ -1,10 +1,10 @@
 # Messages Worth Receiving (MWR) Agent — Constitution
 
-**Version:** 1.3
+**Version:** 1.4
 **Status:** Governing document. The agent obeys this. The reviewer rules with it.
 **Playbook:** P2, Messages Worth Receiving
 **Upstream dependency:** Finding Hidden Customers (FHC) Agent
-**Changelog:** 1.3 hardens the public flag with two mechanical checks (no self-citation via publisher match, public requires resolvable url) and adds type-spanning grader guidance for Standard 7. 1.2 added the three source classes (public / vendor_published / proprietary), run-level vs per-segment decline scopes, and the `revised` marker. 1.1 reframed the agent as a binary gate; added no CTA, public-data-only asymmetry, cohort-level exemplar, Cannonball voice always, no freshness standard, override is instead-of with per-message warning.
+**Changelog:** 1.4 adds a third run-level outcome, `empty_scope` (no segments exist in the requested tier: nothing to gate, a null result, not a quality decline), and records that the one-miss revision pass of Sections 4 and 7 stands: a build brief proposed a stricter "anything short of 7/7 is PQS" boundary with no revision, and it was not adopted. 1.3 hardens the public flag with two mechanical checks (no self-citation via publisher match, public requires resolvable url) and adds type-spanning grader guidance for Standard 7. 1.2 added the three source classes (public / vendor_published / proprietary), run-level vs per-segment decline scopes, and the `revised` marker. 1.1 reframed the agent as a binary gate; added no CTA, public-data-only asymmetry, cohort-level exemplar, Cannonball voice always, no freshness standard, override is instead-of with per-message warning.
 
 ---
 
@@ -119,12 +119,13 @@ If a Gold segment does not carry enough specific, public, value-prop-relevant da
 
 An agent that says "this segment cannot reach PVP: `specific_facts` carries one dated value and no named entity, add a second sourced specific to close it" is enforcing the methodology and giving the growth leader a real decision. An agent that always produces a message is a slop generator with the Cannonball name on it, and it corrupts the gate by turning every "no" into a false "yes." When in doubt, the agent declines and explains rather than fabricates and ships.
 
-### Two scopes of decline
+### Run-level outcomes and decline scopes
 
-A gap can sit at the brand level or the segment level, and they decline differently:
+A gap can sit at the brand level or the segment level, and there is a third run-level outcome that is not a gap at all. They resolve differently:
 
-- **Run-level decline (brand gap):** `brand_profile` is shared across all segments. If `value_prop` or `differentiator` is empty, every segment fails Standard 2 identically. The agent returns ONE run-level decline ("brand profile incomplete: value_prop missing, no segment can clear Standard 2 until this is supplied"), not N copies of the same "no." Fix the brand profile and rerun.
+- **Run-level decline (brand gap):** `brand_profile` is shared across all segments. If `value_prop` or `differentiator` is empty, every segment fails Standard 2 identically. The agent returns ONE run-level decline ("brand profile incomplete: value_prop missing, no segment can clear Standard 2 until this is supplied"), not N copies of the same "no." Fix the brand profile and rerun. This is a real "no": the data to build a PVP is missing.
 - **Per-segment decline (segment-data gap):** if a specific segment lacks enough `public`-classed sources or `specific_facts` to clear the standards, that segment declines on its own terms with its own named gap, while other segments proceed.
+- **Run-level null result (empty scope):** the requested tier is empty. The default scope is Gold; if the artifact carries no Gold segment (and no override redirects the scope to a tier that is populated), there is simply nothing to gate. This is NOT a quality judgment and NOT a "no" on any segment. It is a null result: the gate ran, found no in-scope segment to judge, and says so plainly, naming the tier it looked in and what input would give it something to gate (a Gold segment, or an explicit override to a populated tier). It is reported through the same run-level channel as the brand-gap decline but is marked as its own kind so a reader never mistakes "nothing to judge" for "judged and failed."
 
 ---
 
