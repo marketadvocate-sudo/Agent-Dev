@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "source_agent": "FHC v0.5 Beta",
   "generated_at": "2026-06-15T00:00:00Z",
   "brand_profile": {
@@ -102,6 +102,33 @@
           "source": { "name": "HMA issue brief on the Medicaid Community Engagement Interim Final Rule", "publisher": "Health Management Associates (HMA)", "url": "https://www.healthmanagement.com", "as_of": "June 5, 2026", "access_class": "vendor_published" }
         }
       ],
+      "members": [
+        {
+          "name": "Nebraska",
+          "edp_value": "Enforcing federal work requirements early through a state plan amendment, effective May 1, 2026 (the first state to move ahead of the January 1, 2027 federal deadline).",
+          "source": { "name": "KFF Medicaid Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview/", "as_of": "Read July 2026", "access_class": "public" }
+        },
+        {
+          "name": "Montana",
+          "edp_value": "Enforcing work requirements early, effective July 1, 2026, ahead of the January 1, 2027 federal deadline.",
+          "source": { "name": "KFF Medicaid Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview/", "as_of": "Read July 2026", "access_class": "public" }
+        },
+        {
+          "name": "Iowa",
+          "edp_value": "Implementing work requirements December 1, 2026, ahead of the January 1, 2027 federal deadline.",
+          "source": { "name": "KFF Medicaid Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview/", "as_of": "Read July 2026", "access_class": "public" }
+        },
+        {
+          "name": "Arkansas",
+          "edp_value": "Soft implementation beginning July 1, 2026: checking whether enrollees meet the requirements or qualify for an exemption, but not disenrolling before January 1, 2027.",
+          "source": { "name": "KFF Medicaid Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview/", "as_of": "Read July 2026", "access_class": "public" }
+        },
+        {
+          "name": "Georgia",
+          "edp_value": "Operating an existing work requirement waiver (Pathways to Coverage) that expires December 31, 2026; required to come into compliance with the federal requirements on January 1, 2027.",
+          "source": { "name": "KFF Medicaid Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview/", "as_of": "Read July 2026", "access_class": "public" }
+        }
+      ],
       "data_sources": [
         {
           "name": "KFF Medicaid Work Requirements Tracker",
@@ -181,6 +208,18 @@
           "source": { "name": "Medicaid MCO Demographics Fact Sheet", "publisher": "Institute for Medicaid Innovation (IMI)", "url": "https://www.medicaidinnovation.org", "as_of": "2025", "access_class": "public" }
         }
       ],
+      "members": [
+        {
+          "name": "Molina Healthcare",
+          "edp_value": "Form 10-Q discloses an estimated 15% to 20% enrollment reduction on 1.3 million expansion members and a medical loss ratio of 93.5%, above the level investors and analysts target.",
+          "source": { "name": "Molina Healthcare Form 10-Q", "publisher": "Molina Healthcare (SEC filing)", "url": "https://www.sec.gov/cgi-bin/browse-edgar", "as_of": "2025", "access_class": "public" }
+        },
+        {
+          "name": "Centene",
+          "edp_value": "Reported a medical loss ratio of 93.0% in its earnings disclosures, higher than investors and analysts target.",
+          "source": { "name": "Centene and Molina earnings disclosures", "publisher": "Centene and Molina (SEC filings)", "url": "https://www.sec.gov/cgi-bin/browse-edgar", "as_of": "2025", "access_class": "public" }
+        }
+      ],
       "data_sources": [
         {
           "name": "SEC EDGAR",
@@ -215,86 +254,6 @@
       },
       "acv_range": "$100K to $500K+",
       "pvp_angle": "We analyzed which states' capitation rates are most misaligned with current acuity data, and which state directors are most open to rate amendment requests based on our annual survey. Would it be useful to see where your state markets sit on that map?"
-    },
-    {
-      "segment_id": "bronze-warning-notice-window",
-      "tier": "Bronze",
-      "name": "The Warning Notice Window",
-      "recommended": false,
-      "sector": "Providers",
-      "pain_buyer_perspective": "A hospital CFO received a CMS corrective action plan request, not yet a fine. She has 45 days to respond and 90 days to reach full compliance, and the 2026 rule changed what compliant means. The new CEO attestation makes it a personal liability event for a named executive.",
-      "systemic_condition": "Enforcement is accelerating materially. The 2026 rule requires actual dollar amounts and a written CEO attestation that posted prices are true, accurate, and complete, the sharpest shift in enforcement posture since 2021.",
-      "edp": {
-        "signal": "A hospital named with an open case (warning notice or corrective action plan) in the CMS Hospital Price Transparency Enforcement dataset.",
-        "source": {
-          "name": "CMS Hospital Price Transparency Enforcement Activities and Outcomes Dataset",
-          "publisher": "Centers for Medicare & Medicaid Services (CMS)",
-          "url": "https://data.cms.gov/provider-characteristics/hospitals-and-other-facilities/hospital-price-transparency-enforcement-activities-and-outcomes",
-          "as_of": "Updated monthly, ~288 open cases as of June 2025",
-          "access_class": "public"
-        }
-      },
-      "specific_facts": [
-        {
-          "fact": "As of June 2025, 288 hospitals have an open price transparency enforcement case in the CMS dataset.",
-          "value": "288",
-          "fact_type": "number",
-          "source": { "name": "CMS Hospital Price Transparency Enforcement Dataset", "publisher": "Centers for Medicare & Medicaid Services (CMS)", "url": "https://data.cms.gov", "as_of": "June 2025", "access_class": "public" }
-        },
-        {
-          "fact": "CMS fined 10 hospitals in 2025, up from 3 in 2024, with fines ranging from $32,301 to $309,738 in a single cycle.",
-          "value": "$309,738",
-          "fact_type": "amount",
-          "source": { "name": "CMS enforcement records", "publisher": "Centers for Medicare & Medicaid Services (CMS)", "url": "https://www.cms.gov", "as_of": "2025", "access_class": "public" }
-        },
-        {
-          "fact": "Hospitals out of compliance must submit a corrective action plan within 45 days and reach full compliance within 90 days.",
-          "value": "45 days",
-          "fact_type": "number",
-          "source": { "name": "Hospital Price Transparency rule (45 CFR 180)", "publisher": "Centers for Medicare & Medicaid Services (CMS)", "url": "https://www.cms.gov", "as_of": "2026", "access_class": "public" }
-        }
-      ],
-      "data_sources": [
-        {
-          "name": "CMS Hospital Price Transparency Enforcement Dataset",
-          "url": "https://data.cms.gov",
-          "signal": "Named hospitals with open warning notices and corrective action plans.",
-          "access": "Free, downloadable, updated monthly."
-        },
-        {
-          "name": "CMS Provider of Services (POS) File",
-          "url": "https://data.cms.gov",
-          "signal": "Bed count, ownership, geography for enrichment and prioritization.",
-          "access": "Free, downloadable, updated quarterly."
-        },
-        {
-          "name": "MSRB EMMA",
-          "url": "https://emma.msrb.org",
-          "signal": "Material event notices indicating financial covenant violation or downgrade. Compound signal with enforcement.",
-          "access": "Free, no login."
-        }
-      ],
-      "buyer_motivation": "The buyer is responding to a named enforcement action with a deadline, not shopping for consulting. The CEO attestation requirement raises it to a board-level accountability event.",
-      "viability_scores": {
-        "urgency": 5,
-        "observability": 5,
-        "value_prop_fit": 3,
-        "buyer_resonance": 3,
-        "market_density": 4
-      },
-      "segment_size": {
-        "organizations": 288,
-        "contacts_per_org": 4,
-        "total_contacts": 1152,
-        "decision_maker_titles": [
-          "CFO",
-          "Chief Compliance Officer",
-          "CEO",
-          "VP Revenue Cycle"
-        ]
-      },
-      "acv_range": "$50K to $200K",
-      "pvp_angle": "CMS's enforcement dataset shows your hospital has an open corrective action plan case. The new CEO attestation requirement means compliance is now a named-executive event. We have helped hospitals close their CMS cases within the 90-day window. Would 20 minutes to walk through what that process looks like be useful?"
     }
   ],
   "verdict": {

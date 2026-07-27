@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "source_agent": "Hand-filled (standalone path)",
   "generated_at": "2026-06-16T00:00:00Z",
   "brand_profile": {
@@ -57,6 +57,13 @@
           "value": "67%",
           "fact_type": "number",
           "source": { "name": "Medicaid MCO Demographics Fact Sheet", "publisher": "Institute for Medicaid Innovation (IMI)", "url": "https://www.medicaidinnovation.org", "as_of": "2025", "access_class": "public" }
+        }
+      ],
+      "members": [
+        {
+          "name": "Molina Healthcare",
+          "edp_value": "Form 10-Q discloses an estimated 15% to 20% enrollment reduction across roughly 1.3 million expansion members and a medical loss ratio of 93.5%, above where investors expect it.",
+          "source": { "name": "Molina Healthcare Form 10-Q", "publisher": "Molina Healthcare (SEC filing)", "url": "https://www.sec.gov/cgi-bin/browse-edgar", "as_of": "2025", "access_class": "public" }
         }
       ],
       "data_sources": [
