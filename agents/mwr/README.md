@@ -5,20 +5,24 @@ artifact and, per in-scope Gold segment, returns a verdict: **can a PVP-grade
 message be built from this segmentation work, yes or no?** A `yes` is proven by one
 cohort-level exemplar that clears all seven Gold Standards; a `no` names the gap.
 The verdict is the product. The exemplar is evidence, not a deliverable for scaled
-use. See `MWR_CONSTITUTION.md` (v1.3) for the governing law.
+use. See `MWR_CONSTITUTION.md` (v1.4) for the governing law.
 
 ## Layout
 
 | Path | What it is |
 | --- | --- |
-| `MWR_CONSTITUTION.md` | Governing document, v1.3. The agent obeys it; the reviewer rules with it. |
+| `MWR_CONSTITUTION.md` | Governing document, v1.4. The agent obeys it; the reviewer rules with it. |
 | `AGENT.md` | The agent spec / system prompt encoding Stages 0 to 6. |
+| `GATE_RUN_CHECKLIST.md` | The reviewer's repeatable acceptance checklist (constitution Section 7). |
+| `GATE_RUN_REPORT.hma.md` | A filled checklist: the HMA gate run, the moment of truth. |
+| `DECISIONS.md` | Persistent log of Doug's rulings behind each constitution version. |
 | `contracts/fhc_output.schema.json` | **Input** contract. The sole accepted input. |
-| `contracts/mwr_output.schema.json` | **Output** contract. Per-segment `pvp_achievable` + `revised`. |
+| `contracts/mwr_output.schema.json` | **Output** contract. Per-segment `pvp_achievable` + `revised`; `run_decline.kind`. |
 | `fixtures/fhc_output.example.hma.json` | Stamped HMA fixture (every source carries `publisher` + `access_class`). |
 | `fixtures/fhc_output.example.silver_override.json` | Hand-filled Silver segment with type-spanning public facts. |
 | `fixtures/fhc_output.example.thin.json` | Data-thin Gold segment (one bare public fact). |
 | `fixtures/fhc_output.example.brand_gap.json` | Empty `value_prop` to trigger a run-level decline. |
+| `fixtures/fhc_output.example.empty_scope.json` | Complete brand, only a Silver segment: the Gold scope is empty. |
 | `examples/mwr_output.*.json` | The gate run over each fixture (see matrix below). |
 | `tools/gate.py` | Deterministic harness for the mechanical stages and schema validation. |
 | `tools/selftest.py` | Pins expected outcomes for every fixture and validates every artifact. |
@@ -27,7 +31,7 @@ use. See `MWR_CONSTITUTION.md` (v1.3) for the governing law.
 
 0. **Ingest and validate** against the input contract (deterministic).
 1. **Brand-profile gate**: empty `value_prop`/`differentiator` -> one run-level decline.
-2. **Scope**: Gold by default; Silver/Bronze only by explicit override (instead-of), with a per-message trade-off warning.
+2. **Scope**: Gold by default; Silver/Bronze only by explicit override (instead-of), with a per-message trade-off warning. An empty scoped tier is a run-level `empty_scope` null result, not a decline.
 3. **Per-segment sufficiency pre-flight**: no surviving public anchor -> per-segment `no`.
 4. **Build one cohort-level exemplar**: no merge fields, no CTA, no em-dashes, Cannonball voice; Standards 3/6/7 on public sources only.
 5. **Adversarial self-check**: seven standards yes/no, mechanical source-class + hardening checks, Standard 7 type-span; 0 miss -> yes, 1 miss -> one revision pass, 2+ -> no.
@@ -60,7 +64,8 @@ Every branch of the output contract is exercised by a fixture/output pair:
 | `hma` | Gold (default) | `yes` | PVP achievable; GS6 asymmetry rebuilt on public data only |
 | `silver_override` | Silver (override) | `yes` + `override_warning` | Per-message trade-off warning under an instead-of override |
 | `thin` | Gold (default) | `no` (GS 6, 7) | Per-segment decline naming the gap and the input that closes it |
-| `brand_gap` | Gold (default) | run-level decline | One decline for an empty `value_prop`, not N identical no's |
+| `brand_gap` | Gold (default) | run-level decline (`kind: brand_gap`) | One decline for an empty `value_prop`, not N identical no's |
+| `empty_scope` | Gold (default) | run-level decline (`kind: empty_scope`) | Null result: no Gold segment exists, so nothing to gate (not a "no") |
 
 Note on fidelity: the **original** `hma` fixture's Silver and Bronze segments both
 decline on Standard 7 (their specifics are all quantities, no name/location/event

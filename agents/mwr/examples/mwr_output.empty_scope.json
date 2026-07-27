@@ -1,0 +1,18 @@
+{
+  "mwr_version": "1.4",
+  "source_artifact": {
+    "source_agent": "Hand-filled (standalone path)",
+    "schema_version": "1.0",
+    "generated_at": "2026-06-16T00:00:00Z",
+    "company": "Health Management Associates (HMA)"
+  },
+  "scope_used": "Gold",
+  "override": false,
+  "run_decline": {
+    "kind": "empty_scope",
+    "reason": "No Gold segment in the artifact. The default scope is Gold, and this run carries only a Silver segment, so there is nothing to gate. This is a null result, not a 'no' on any segment: the gate found no in-scope segment to judge, it did not judge one and reject it.",
+    "scoped_tier": "Gold",
+    "input_that_would_close_it": "Supply a Gold-tier segment for the gate to judge, or, accepting the Section 3 trade-offs, pass an explicit override to run the gate over the populated Silver tier instead."
+  },
+  "segment_verdicts": []
+}
