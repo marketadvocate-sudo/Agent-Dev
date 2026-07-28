@@ -136,3 +136,33 @@ set; otherwise still needs synthetic scaffolding.
 **8. Multi-segment behavior — WATCH.** Verdict-per-segment is specified but
 has only ever run against a one-segment fixture. First multi-segment
 artifact should get a deliberate review.
+
+---
+
+## FHC-repo session backlog (from the Texada artifact, 2026-07-28)
+
+These are for the deferred session on the **FHC agent's** repo, not MWR. Raised by
+`fixtures/fhc_output.texada.json` and its `_quality_flags`.
+
+**F1. Investigate stage must source telling data separately from finding data.**
+Principle: **the EDP finds; it does not tell.** The finding signal (per-member,
+first-order retrieval about the recipient, e.g. an OSHA citation) proves membership,
+timing, and pain. It must never be the message content, because the buyer's own
+record fails GS6 by the expertise barrier and reads as surveillance. The telling
+material (the GS6 asymmetry) is second-order synthesis computed **across** entities
+from **different** databases (e.g. EMMA bond issuances and FHWA/IIJA awards near the
+member's yard, translated into corridor demand). The Investigate stage must source
+these two separately and stamp finding-vs-telling. See the Texada Gold `pvp_angle`
+(RULED: corridor demand synthesis) and `telling_sources_note`.
+
+**F2. Minimum-viable-segment self-certification bug.** FHC's output check-marked the
+sub-$50K-ACV minimum of 1,000 companies for the Texada **Silver** segment while
+sizing that segment at **650** companies. 650 < 1,000: the check passed a segment
+that violates the rule. Fix the FHC minimum-viable-segment check so it cannot
+self-certify below its own threshold, or require an explicit logged exception.
+
+**F3. Access-architecture note (carried).** The Texada Gold roster depends on OSHA
+IMIS, whose DOL programmatic API is retired (last working Feb 2026); the UI is
+human-usable only, so the members roster is a human/Clay-provider pull, not an agent
+fetch. The AED member directory is membership-gated and is classed proprietary (it
+cannot seed GS6 asymmetry). Feed both to the FHC access-architecture work.
