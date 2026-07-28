@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "source_agent": "Hand-filled (standalone path)",
   "generated_at": "2026-06-16T00:00:00Z",
   "brand_profile": {
@@ -43,6 +43,13 @@
           "value": "June 5, 2026",
           "fact_type": "event",
           "source": { "name": "HMA issue brief on the Medicaid Community Engagement Interim Final Rule", "publisher": "Health Management Associates (HMA)", "url": "https://www.healthmanagement.com", "as_of": "June 5, 2026", "access_class": "vendor_published" }
+        }
+      ],
+      "members": [
+        {
+          "name": "SYNTHETIC SCAFFOLDING (illustrative placeholder, not a real account)",
+          "edp_value": "SYNTHETIC SCAFFOLDING: no real EDP value. Present only to satisfy the required members array for this hand-filled thin-evidence test fixture. Not traceable to any public source and must never be treated as sourced data.",
+          "source": { "name": "Synthetic scaffolding, not a sourced fact", "publisher": "MWR test fixture (synthetic, not a real publisher)", "as_of": "n/a", "access_class": "proprietary" }
         }
       ],
       "data_sources": [

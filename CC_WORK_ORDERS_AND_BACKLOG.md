@@ -113,6 +113,18 @@ gate checklist still cannot execute. Resolves free of charge when Work Order
 1's fixture re-stamp happens IF a fresh FHC export restores the full segment
 set; otherwise still needs synthetic scaffolding.
 
+> **Update (2026-07-27, v2.0 migration):** The HMA fixture's **Bronze** segment
+> ("The Warning Notice Window") was **dropped** when the FHC contract went to
+> v2.0. The required members roster for Bronze needs real named open-case
+> hospitals from the CMS Hospital Price Transparency Enforcement dataset, and
+> that data could not be sourced: `data.cms.gov` returns 403 to automated fetch
+> and web search yields only aggregates (no named open-case hospitals). Per
+> ruling, nothing was fabricated or placeholdered. **Restoration condition:**
+> re-add the Bronze segment with a real members roster the moment the CMS data
+> path opens — a manual paste of named open-case hospitals with their status, or
+> the data.cms.gov dataset API once reachable. The Silver/Bronze demonstration of
+> a Standard-7 type-span decline is likewise reduced until Bronze returns.
+
 **8. Multi-segment behavior — WATCH.** Verdict-per-segment is specified but
 has only ever run against a one-segment fixture. First multi-segment
 artifact should get a deliberate review.

@@ -2,15 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cannonballgtm.com/contracts/fhc_output.schema.json",
   "title": "FHC Output Artifact",
-  "description": "The complete, structured output of the Finding Hidden Customers agent. This is the sole accepted input to the MWR agent. FHC produces it; MWR consumes it. Neither agent contains the other. This schema is the federated boundary between them.",
+  "description": "The complete, structured output of the Finding Hidden Customers agent. This is the sole accepted input to the MWR agent. FHC produces it; MWR consumes it. Neither agent contains the other. This schema is the federated boundary between them. v2.0 adds a required per-segment members roster (each account with its observed EDP value and a stamped source) and an optional resolved_conditions array, so MWR can treat a buyer claim as entailed by membership rather than asserted with an 'if'. See FHC_CONTRACT_AMENDMENT.md.",
   "type": "object",
   "required": ["schema_version", "source_agent", "brand_profile", "segments", "verdict"],
   "additionalProperties": false,
   "properties": {
     "schema_version": {
       "type": "string",
-      "description": "Version of this contract the artifact conforms to. Example: 1.0",
-      "examples": ["1.0"]
+      "const": "2.0",
+      "description": "Version of this contract the artifact conforms to. Pinned to 2.0: the members roster (see $defs.segment) is a breaking change, so pre-roster artifacts (schema_version 1.0, no members) fail validation loudly rather than pass quietly. Bump this const when a future breaking amendment lands.",
+      "examples": ["2.0"]
     },
     "source_agent": {
       "type": "string",
@@ -160,7 +161,7 @@
     },
     "segment": {
       "type": "object",
-      "required": ["segment_id", "tier", "name", "edp", "specific_facts", "data_sources", "viability_scores"],
+      "required": ["segment_id", "tier", "name", "edp", "specific_facts", "data_sources", "viability_scores", "members"],
       "additionalProperties": false,
       "properties": {
         "segment_id": { "type": "string" },
@@ -200,6 +201,70 @@
           "description": "MWR-CRITICAL. The concrete, sourced specifics MWR will anchor messaging to. Minimum two recommended. Without these, MWR cannot reliably clear Gold Standard 7 and should decline per its constitution.",
           "minItems": 1,
           "items": { "$ref": "#/$defs/specific_fact" }
+        },
+        "members": {
+          "type": "array",
+          "description": "MWR-CRITICAL. The accounts that satisfy this segment's EDP condition, each with its observed EDP value and a stamped source. This is what makes segment membership an assertable fact about each buyer. A segment without members supports no assertions and MWR must treat every buyer claim as unentailed.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "edp_value", "source"],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The account. Example: State of Georgia Department of Community Health."
+              },
+              "edp_value": {
+                "type": "string",
+                "description": "This member's observed value for the segment's EDP signal. Example: No declared implementation path as of June 2026."
+              },
+              "source": { "$ref": "#/$defs/source_ref" },
+              "signals": {
+                "type": "array",
+                "description": "Optional per-member values for the segment's resolved_conditions (see resolved_conditions). Each entry resolves one condition for this member with a stamped source.",
+                "items": {
+                  "type": "object",
+                  "required": ["condition_id", "value", "source"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "condition_id": { "type": "string" },
+                    "value": { "type": "string" },
+                    "source": { "$ref": "#/$defs/source_ref" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "resolved_conditions": {
+          "type": "array",
+          "description": "Conditions beyond the EDP that FHC has resolved with per-member public signals. A condition declared here MUST have a corresponding signal entry for every member, or be marked partial with the uncovered members listed. MWR may assert a condition about a buyer only if it is the EDP or appears here with that member covered.",
+          "items": {
+            "type": "object",
+            "required": ["condition_id", "statement", "signal_description", "coverage"],
+            "additionalProperties": false,
+            "properties": {
+              "condition_id": { "type": "string" },
+              "statement": {
+                "type": "string",
+                "description": "The condition as an assertable sentence template. Example: exemption guidance was last published before June 1, 2026."
+              },
+              "signal_description": {
+                "type": "string",
+                "description": "The public signal that resolves it. Example: publication date of the state's most recent exemption guidance on its Medicaid agency site, cross-checked against Medicaid.gov SPA and waiver filings."
+              },
+              "coverage": {
+                "type": "string",
+                "enum": ["complete", "partial"],
+                "description": "complete: every member has a signal entry. partial: uncovered_members lists the gaps and MWR treats the condition as unentailed for them."
+              },
+              "uncovered_members": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
         },
         "data_sources": {
           "type": "array",

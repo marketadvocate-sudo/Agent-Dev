@@ -67,11 +67,20 @@ Every branch of the output contract is exercised by a fixture/output pair:
 | `brand_gap` | Gold (default) | run-level decline (`kind: brand_gap`) | One decline for an empty `value_prop`, not N identical no's |
 | `empty_scope` | Gold (default) | run-level decline (`kind: empty_scope`) | Null result: no Gold segment exists, so nothing to gate (not a "no") |
 
-Note on fidelity: the **original** `hma` fixture's Silver and Bronze segments both
-decline on Standard 7 (their specifics are all quantities, no name/location/event
-anchor), so the override does not lower the bar. The `silver_override` fixture is a
-hand-filled artifact (a contract-legitimate input per constitution Section 2) built
-to carry type-spanning public facts, so it can reach `yes` and show the warning.
+Note on fidelity: the `hma` fixture's Silver segment declines on Standard 7 (its
+specifics are all quantities, no name/location/event anchor), so an override would
+not lower the bar. The `silver_override` fixture is a hand-filled artifact (a
+contract-legitimate input per constitution Section 2) built to carry type-spanning
+public facts, so it can reach `yes` and show the warning.
+
+Note on the FHC contract v2.0 (members roster): every segment now carries a required
+`members` array (each account with its observed `edp_value` and a stamped source).
+The `hma` Gold roster is five real KFF-sourced states; its Silver roster is two real
+SEC-sourced MCOs. The other fixtures carry real members where they name a public
+entity, and `thin` carries one member explicitly labeled synthetic scaffolding. The
+`hma` **Bronze** segment was **dropped** at v2.0 because its roster needs real named
+open-case hospitals from the CMS enforcement dataset that could not be sourced; its
+restoration is tracked in `CC_WORK_ORDERS_AND_BACKLOG.md` (item 7).
 
 ## The moment of truth (HMA Gold segment)
 

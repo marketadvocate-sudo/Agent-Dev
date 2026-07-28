@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "source_agent": "Hand-filled (standalone path)",
   "generated_at": "2026-06-16T00:00:00Z",
   "brand_profile": {
@@ -41,6 +41,13 @@
           "value": "43",
           "fact_type": "number",
           "source": { "name": "KFF Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview", "as_of": "June 2026", "access_class": "public" }
+        }
+      ],
+      "members": [
+        {
+          "name": "Nebraska",
+          "edp_value": "Enforcing federal work requirements early through a state plan amendment, effective May 1, 2026 (first state to move ahead of the January 1, 2027 deadline).",
+          "source": { "name": "KFF Medicaid Work Requirements Tracker", "publisher": "KFF", "url": "https://www.kff.org/medicaid/medicaid-work-requirements-tracker-overview/", "as_of": "Read July 2026", "access_class": "public" }
         }
       ],
       "data_sources": [

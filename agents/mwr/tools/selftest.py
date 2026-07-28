@@ -5,8 +5,11 @@ Run from anywhere:  python3 agents/mwr/tools/selftest.py
 Exits non-zero on any failure, so it is safe to wire into CI.
 
 It asserts:
-  * every fixture conforms to the input contract
+  * every fixture conforms to the input contract (v2.0)
   * the mechanical gate reaches the expected deterministic outcome per fixture/tier
+  * the v2.0 membership roster: every segment carries >=1 stamped member, the thin
+    fixture's synthetic member is labeled and cannot earn public credit, and a
+    pre-v2.0 artifact (no members) fails validation loudly
   * every example output conforms to the output contract
   * no exemplar contains an em-dash or a CTA, and override warnings appear iff override
 """
@@ -84,8 +87,10 @@ def main() -> int:
           segment_eligible(hma, "Gold", "gold-january-sprinters"))
     check("hma Silver margin-bleed declines (type-span fail)",
           not segment_eligible(hma, "Silver", "silver-margin-bleed-mcos"))
-    check("hma Bronze warning-notice declines (type-span fail)",
-          not segment_eligible(hma, "Bronze", "bronze-warning-notice-window"))
+    # Bronze segment was dropped when the FHC contract went to v2.0: its members
+    # roster requires real named open-case hospitals from the CMS enforcement
+    # dataset, which could not be sourced. Restoration is tracked in
+    # CC_WORK_ORDERS_AND_BACKLOG.md (backlog item 7). Do not re-add without data.
 
     sv = arts["fhc_output.example.silver_override.json"]
     check("silver_override Silver eligible (yes under override)",
@@ -104,6 +109,32 @@ def main() -> int:
           not any(s["tier"] == "Gold" for s in es["segments"]))
     check("empty_scope has a populated non-Gold tier available for override",
           any(s["tier"] in ("Silver", "Bronze") for s in es["segments"]))
+
+    print("\n== v2.0 membership roster ==")
+    for fn, art in arts.items():
+        check(f"{fn}: schema_version is 2.0", art.get("schema_version") == "2.0")
+        check(f"{fn}: every segment carries >=1 member",
+              all(isinstance(s.get("members"), list) and len(s["members"]) >= 1
+                  for s in art["segments"]))
+        check(f"{fn}: every member carries a stamped source",
+              all(m.get("source", {}).get("name") and m["source"].get("publisher")
+                  and m["source"].get("access_class") in ("public", "vendor_published", "proprietary")
+                  for s in art["segments"] for m in s["members"]))
+    # The thin fixture's one member is synthetic scaffolding: it must be labeled as
+    # such in the entry and must not be able to earn public credit.
+    thin_mem = thin["segments"][0]["members"][0]
+    check("thin member is labeled synthetic scaffolding",
+          "synthetic" in thin_mem["name"].lower()
+          or "synthetic" in thin_mem["source"].get("name", "").lower())
+    check("thin synthetic member is not access_class public",
+          thin_mem["source"].get("access_class") != "public")
+    # A pre-v2.0 artifact (schema_version 1.0, no members) must fail loudly.
+    legacy = json.loads((FIX / "fhc_output.example.hma.json").read_text())
+    legacy["schema_version"] = "1.0"
+    for s in legacy["segments"]:
+        s.pop("members", None)
+    check("pre-v2.0 artifact fails loudly (version const + missing members)",
+          bool(gate.validate_against(gate.FHC_SCHEMA, legacy)))
 
     print("\n== Output contract: examples validate ==")
     outputs = ["hma", "silver_override", "thin", "brand_gap", "empty_scope"]

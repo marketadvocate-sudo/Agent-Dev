@@ -2,7 +2,7 @@
   "mwr_version": "1.4",
   "source_artifact": {
     "source_agent": "FHC v0.5 Beta",
-    "schema_version": "1.0",
+    "schema_version": "2.0",
     "generated_at": "2026-06-15T00:00:00Z",
     "company": "Health Management Associates (HMA)"
   },
