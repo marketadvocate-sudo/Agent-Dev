@@ -1,29 +1,33 @@
 #!/usr/bin/env python3
 """MWR gate — deterministic harness.
 
-Executes the mechanical, no-judgment portions of MWR_CONSTITUTION.md v1.4:
+Executes the mechanical, no-judgment portions of MWR_CONSTITUTION.md v1.5:
 
   Stage 0  validate the FHC artifact against the input contract
   Stage 1  brand-profile gate (run-level decline)
   Stage 2  scope selection (Gold default; Silver/Bronze override)
   Stage 5  source-class hardening checks (public-only, no self-citation,
            url present) and the Standard 7 type-spanning test
+  Stage 6  (lint-exemplar) v1.5 format checks over a produced message:
+           body/subject word counts, em-dash, and buyer-conditional detection
+           (the entailment alarm), optionally confirming members are present.
 
-What it does NOT do: write the message or grade Standards 1-6 (judgment, the
-agent's job). It reports, per in-scope segment, which specific_facts survive as
-usable public anchors and whether Standard 7's type-spanning rule can be met. A
-segment with no surviving public facts is a deterministic per-segment "no".
+What it does NOT do: write the message, grade Standards 1-6, or judge the
+insight (all judgment, the agent's job). The buyer-conditional scan raises an
+alarm; whether a flagged conditional is truly unentailed is the agent's call.
 
 It can also validate an MWR output artifact against the output contract.
 
 Usage:
   gate.py report  <fhc_artifact.json>            [--tier Gold|Silver|Bronze]
   gate.py validate-output <mwr_output.json>
+  gate.py lint-exemplar   <mwr_output.json>      [--fhc <fhc_artifact.json>]
 """
 from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from urllib.parse import urlparse
@@ -82,6 +86,80 @@ ANCHOR_TYPES = {"name", "location", "event"}
 
 def type_span_ok(fact_types: list[str]) -> bool:
     return len(set(fact_types)) >= 2 and bool(set(fact_types) & ANCHOR_TYPES)
+
+
+# --- v1.5 mechanical exemplar checks (the bouncer; judgment stays out) ---
+
+BODY_MAX = 165          # constitution v1.5: 150 target, 165 hard ceiling
+BODY_TARGET = 150
+SUBJECT_MAX = 8         # words
+SECOND_PERSON = re.compile(r"\b(you|your|yours|you're|youre)\b", re.I)
+# Hedges that, aimed at the buyer, mark a buyer-conditional (entailment alarm).
+HEDGE = re.compile(r"\b(if|whether|may have|may be|might|maybe|likely|probably|perhaps|in case|could have|possibly)\b", re.I)
+
+
+def word_count(text: str) -> int:
+    return len(text.split())
+
+
+def split_sentences(text: str) -> list[str]:
+    # Good enough for a smoke check: split on sentence punctuation and newlines.
+    parts = re.split(r"(?<=[.!?])\s+|\n+", text.strip())
+    return [s.strip() for s in parts if s.strip()]
+
+
+def buyer_conditionals(body: str) -> list[str]:
+    """Sentences that hedge a claim AND address the buyer in the second person.
+    A mechanical alarm for the entailment rule, not a verdict: the agent's
+    judgment decides whether the conditional is truly unentailed."""
+    flagged = []
+    for s in split_sentences(body):
+        if SECOND_PERSON.search(s) and HEDGE.search(s):
+            flagged.append(s)
+    return flagged
+
+
+def lint_exemplar(args) -> int:
+    out = load(args.output)
+    fhc = load(args.fhc) if getattr(args, "fhc", None) else None
+    members_by_seg = {}
+    if fhc:
+        for s in fhc.get("segments", []):
+            members_by_seg[s.get("segment_id")] = len(s.get("members", []) or [])
+
+    print("== v1.5 mechanical exemplar lint ==")
+    failures = 0
+    exemplars = 0
+    for v in out.get("segment_verdicts", []):
+        ex = v.get("exemplar")
+        if not ex:
+            continue
+        exemplars += 1
+        seg = v.get("segment_id", "?")
+        subj_wc = word_count(ex.get("subject_line", ""))
+        body_wc = word_count(ex.get("message_body", ""))
+        text = " ".join([ex.get("subject_line", ""), ex.get("eyebrow_line", ""), ex.get("message_body", "")])
+        emdash = ("—" in text) or ("–" in text)
+        conds = buyer_conditionals(ex.get("message_body", ""))
+        print(f"\n  segment: {seg}")
+        def line(ok, label, detail=""):
+            nonlocal failures
+            if not ok:
+                failures += 1
+            print(f"    [{'ok' if ok else 'FAIL'}] {label}" + (f"  {detail}" if detail else ""))
+        line(subj_wc <= SUBJECT_MAX, f"subject <= {SUBJECT_MAX} words", f"({subj_wc} words)")
+        line(body_wc <= BODY_MAX, f"body <= {BODY_MAX} words", f"({body_wc} words)"
+             + ("  [over 150 target, within ceiling]" if BODY_TARGET < body_wc <= BODY_MAX else ""))
+        line(not emdash, "no em-dash")
+        line(not conds, "no buyer-conditional (entailment)",
+             "" if not conds else "-> " + " | ".join(conds))
+        if fhc is not None:
+            n = members_by_seg.get(seg, 0)
+            line(n >= 1, "segment carries members (entailment possible)", f"({n} members)")
+    if exemplars == 0:
+        print("  (no exemplars in this output; nothing to lint)")
+    print(f"\n  {exemplars} exemplar(s) linted, {failures} mechanical failure(s).")
+    return 1 if failures else 0
 
 
 def report(args) -> int:
@@ -180,6 +258,12 @@ def main() -> int:
     pv = sub.add_parser("validate-output", help="validate an MWR output artifact")
     pv.add_argument("output", type=Path)
     pv.set_defaults(func=validate_output)
+
+    pl = sub.add_parser("lint-exemplar", help="v1.5 mechanical checks over an MWR output's exemplars")
+    pl.add_argument("output", type=Path)
+    pl.add_argument("--fhc", type=Path, default=None,
+                    help="optional FHC artifact, to confirm each segment carries members")
+    pl.set_defaults(func=lint_exemplar)
 
     args = p.parse_args()
     return args.func(args)

@@ -56,8 +56,13 @@ Insert as its own ruled block:
 > 2. **Resolve** the condition from a per-member signal already in the
 >    artifact.
 > 3. **Decline**, naming the missing signal as the gap. The decline's
->    what_would_change_the_verdict field states the work order for FHC:
+>    input_that_would_close_it field states the work order for FHC:
 >    which public signal, resolved per member, would permit the assertion.
+>
+> (Field-name note, 2026-07-28: the entailment work order is carried in the
+> shipped output contract's existing `gap.input_that_would_close_it` field.
+> This wording was reconciled to the shipped schema per Doug's ruling; the
+> schema name wins over the planning draft.)
 >
 > The word "if" aimed at the buyer is a data-lineage alarm, not a style
 > choice. Conditionals about the world ("if the deadline holds") are
