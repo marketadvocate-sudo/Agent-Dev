@@ -88,5 +88,19 @@ rule's third-exit work order is carried in that existing field, marked by the ne
   the v1.5 mechanical lint (256-word body, a buyer-conditional). The ratified v1.5
   golden will be produced by the updated agent from a forthcoming Texada Software FHC
   artifact and ratified by Doug. Tracked in the backlog.
-- **Negative golden fixture** (`examples/mwr_output.hma.REJECTED.json`): pending Doug's
-  paste of the rejected 2/7 message and its scorecard.
+- **Negative golden fixture** (`examples/mwr_output.hma.REJECTED.json`): **delivered.**
+  Doug supplied the rejected message and its Kahuna scorecard (five misses: Standards
+  1, 4, 5, 6, 7; keystone cascade on 5/6/7; PQS, rejected). Provenance recorded in the
+  fixture: produced by the v1.4 agent, graded 7/7 under v1.4, overturned by Doug.
+
+### D7. `rejected_exemplar` added to the output contract (needs ratification)
+
+Building the negative fixture surfaced a schema gap: a `no` verdict could carry only a
+`gap`, so a rejected message and its `seven_standard_check` (where the new
+`failure_type` keystone-cascade marker lives) had nowhere to go. **Resolution: added an
+optional `rejected_exemplar` to `segment_verdict`, permitted only on a `no`** (a `yes`
+still forbids it), carrying the rejected message, its dependency-ordered scorecard, a
+`format_defects` list, and provenance. This completes the Q4 `failure_type` feature
+(which otherwise had no home on a rejection) and lets a negative fixture conform. It is
+a contract addition beyond the WO2 step-3 scope; flagged for Doug's ratification, and
+trivially reshaped if a different container is preferred.

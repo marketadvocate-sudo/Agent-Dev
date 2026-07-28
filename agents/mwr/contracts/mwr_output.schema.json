@@ -143,16 +143,17 @@
           "default": false
         },
         "exemplar": { "$ref": "#/$defs/exemplar" },
-        "gap": { "$ref": "#/$defs/gap" }
+        "gap": { "$ref": "#/$defs/gap" },
+        "rejected_exemplar": { "$ref": "#/$defs/rejected_exemplar" }
       },
       "allOf": [
         {
-          "description": "A 'yes' carries an exemplar and no gap.",
+          "description": "A 'yes' carries an exemplar, no gap, and no rejected_exemplar.",
           "if": { "properties": { "pvp_achievable": { "const": "yes" } } },
-          "then": { "required": ["exemplar"], "not": { "required": ["gap"] } }
+          "then": { "required": ["exemplar"], "not": { "anyOf": [ { "required": ["gap"] }, { "required": ["rejected_exemplar"] } ] } }
         },
         {
-          "description": "A 'no' carries a gap and no exemplar.",
+          "description": "A 'no' carries a gap and no exemplar. It MAY carry a rejected_exemplar (the graded, rejected message) for a negative/teaching fixture.",
           "if": { "properties": { "pvp_achievable": { "const": "no" } } },
           "then": { "required": ["gap"], "not": { "required": ["exemplar"] } }
         }
@@ -216,6 +217,45 @@
           "description": "True when this 'no' is an entailment decline: the message required a claim about the buyer that segment membership does not entail and no per-member signal in the artifact resolves, and the buyer-conditional could not be rewritten away. input_that_would_close_it then carries the FHC work order for the missing per-member signal. Constitution v1.5, entailment rule.",
           "default": false
         }
+      }
+    },
+    "rejected_exemplar": {
+      "type": "object",
+      "description": "OPTIONAL and only on a 'no' verdict. The message that was graded and rejected, preserved with its scorecard so the failure is inspectable. Production 'no' verdicts normally carry only a gap; this field exists so a negative/teaching fixture can keep the rejected message and its keystone-cascade scorecard (the failure_type field lives here, on the standard_check entries). Not a deliverable; a record of a rejection.",
+      "required": ["subject_line", "eyebrow_line", "message_body", "seven_standard_check"],
+      "additionalProperties": false,
+      "properties": {
+        "subject_line": { "type": "string" },
+        "eyebrow_line": { "type": "string" },
+        "message_body": { "type": "string", "description": "The rejected message body, kept verbatim. It is NOT expected to pass the v1.5 format or entailment rules; that is the point of preserving it." },
+        "facts_used": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "fact_type", "source_name", "publisher", "access_class"],
+            "additionalProperties": false,
+            "properties": {
+              "value": { "type": "string" },
+              "fact_type": { "type": "string", "enum": ["number", "date", "name", "location", "event", "amount"] },
+              "source_name": { "type": "string" },
+              "publisher": { "type": "string" },
+              "access_class": { "type": "string", "enum": ["public", "vendor_published", "proprietary"] }
+            }
+          }
+        },
+        "seven_standard_check": {
+          "type": "array",
+          "description": "All seven standards, in dependency order, each yes/no with basis and (on a miss) failure_type. Records the keystone cascade that produced the rejection.",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": { "$ref": "#/$defs/standard_check" }
+        },
+        "format_defects": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Format-level failures recorded separately from the standard scorecard: buyer-conditional, over-length body, over-length subject, em-dash, or a sender credential in the body."
+        },
+        "provenance": { "type": "string", "description": "How this rejected message came to be (which agent produced it, under which version it was graded, who overturned it), so the fixture teaches." }
       }
     }
   }

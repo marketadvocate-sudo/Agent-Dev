@@ -25,6 +25,7 @@ use. See `MWR_CONSTITUTION.md` (v1.5) for the governing law.
 | `fixtures/fhc_output.example.brand_gap.json` | Empty `value_prop` to trigger a run-level decline. |
 | `fixtures/fhc_output.example.empty_scope.json` | Complete brand, only a Silver segment: the Gold scope is empty. |
 | `examples/mwr_output.*.json` | The gate run over each fixture (see matrix below). |
+| `examples/mwr_output.hma.REJECTED.json` | **Negative** golden: a v1.4 message graded under v1.5, rejected 5-miss PQS (ingredient-stuffing without an insight). |
 | `tools/gate.py` | Deterministic harness for the mechanical stages and schema validation. |
 | `tools/selftest.py` | Pins expected outcomes for every fixture and validates every artifact. |
 
@@ -67,6 +68,7 @@ Every branch of the output contract is exercised by a fixture/output pair:
 | `thin` | Gold (default) | `no` (GS 6, 7) | Per-segment decline naming the gap and the input that closes it |
 | `brand_gap` | Gold (default) | run-level decline (`kind: brand_gap`) | One decline for an empty `value_prop`, not N identical no's |
 | `empty_scope` | Gold (default) | run-level decline (`kind: empty_scope`) | Null result: no Gold segment exists, so nothing to gate (not a "no") |
+| `hma.REJECTED` | Gold (default) | `no` (GS 1, 4, 5, 6, 7) | **Negative golden.** A 7/7-on-presence v1.4 message, graded under v1.5, fails the keystone (Standard 4) and cascades 5/6/7: ingredient-stuffing without an insight |
 
 Note on fidelity: the `hma` fixture's Silver segment declines on Standard 7 (its
 specifics are all quantities, no name/location/event anchor), so an override would
