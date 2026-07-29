@@ -1,26 +1,14 @@
 {
-  "_conversion_notes": "PROVENANCE (July 28, 2026): Converted by Claude from the FHC agent v0.5 Beta prose output for Texada Software. All segment content, scores, sizes, EDPs, and pvp_angles are the agent's own findings, restructured into the v2.0 contract shape. STATUS: intentionally INCOMPLETE. (1) MEMBERS ABSENT on all three segments: the FHC run predates the members requirement and named zero accounts; the Gold roster requires a manual OSHA IMIS pull (the DOL enforcement API is retired per the FHC output itself), Silver requires the deal tracker, Bronze requires the EMMA/Census cross-reference. This artifact FAILS v2.0 validation on exactly those three points, by design, until rosters are stamped. (2) SOURCE STAMPS: source_refs below are stamped by the converter, not by FHC; several FHC claims carried no identifiable publisher (e.g. 73% vs 96% audit pass rates, 937/2,057 establishment counts, revenue filters) and were EXCLUDED from specific_facts rather than stamped on faith. See _facts_needing_sources. (3) KAHUNA FLAGS in _quality_flags require Doug's ruling before this artifact is treated as a golden input.",
-  "_facts_needing_sources": [
-    "Paper-based systems achieve 73% audit pass rates vs 96% for digital (no publisher named)",
-    "937 companies verified-active under NAICS 532412; 7,534 under NAICS 423820; 2,057 under SIC 7353 (no publisher named; figures also mutually inconsistent)",
-    "Insurance premium increases of 30-50% post-citation (no publisher named)",
-    "Work stoppages costing $25,000-$75,000 per day (no publisher named)",
-    "92% of construction firms having trouble finding qualified workers; $2.2B annual technician-shortage losses (publishers likely AGC and AED Foundation; not confirmed by FHC)"
-  ],
-  "_quality_flags": [
-    "SILVER SIZE CONTRADICTION: segment sized at 650 companies but the output checkmarks the sub-$50K ACV minimum of 1,000. 650 < 1,000. Either the minimum-viable-segment rule is violated (Silver should not have shipped as-is) or the exception needs an explicit ruling.",
-    "AED directory access: full directory requires membership; classed proprietary here, not public. Facts relying on it cannot seed GS6 asymmetry under MWR rules.",
-    "OSHA IMIS data path: UI is human-usable; the DOL programmatic API is retired (last working Feb 2026 per FHC output). Members roster is a human-pull or Clay-provider task, not an agent fetch. Feed this to the access-architecture backlog item.",
-    "GS6 RULING (Doug, July 28, 2026): the FHC output's original Gold pvp_angle (citation-anchored messaging with audit-failure statistics) fails GS6 by the expertise barrier: the buyer's own citation record can never be the asymmetry, and the supporting statistics were unsourced. Replaced with corridor demand synthesis (see gold pvp_angle). Generalized principle for the FHC agent spec: the EDP finds; it does not tell. Investigate stage must source telling data (cross-entity synthesis) separately from finding data (per-member signals)."
-  ],
   "schema_version": "2.0",
+  "source_agent": "Finding Hidden Customers Agent v0.5 Beta",
   "brand_profile": {
     "company": "Texada Software",
     "category": "Equipment growth platform (SaaS) for the heavy equipment industry",
-    "value_prop": "An integrated platform for equipment dealerships and rental businesses combining an Industrial CRM, Equipment-Aware Service Management, and Intelligent Rental Management in a single suite, purpose-built for heavy equipment with native OEM integrations (Caterpillar, John Deere). Founded 1984, ~170 employees, ~$18.4M revenue, backed by Banneker Partners. ACV ~$25,000, ~60-day sales cycle. Buyers: VP Operations, General Manager, Director of Rental/Service, IT Director at dealerships and rental houses."
+    "value_prop": "An integrated platform for equipment dealerships and rental businesses combining an Industrial CRM, Equipment-Aware Service Management, and Intelligent Rental Management in a single suite, purpose-built for heavy equipment with native OEM integrations (Caterpillar, John Deere). Founded 1984, ~170 employees, ~$18.4M revenue, backed by Banneker Partners. ACV ~$25,000, ~60-day sales cycle. Buyers: VP Operations, General Manager, Director of Rental/Service, IT Director at dealerships and rental houses.",
+    "differentiator": "The uniquely integrated sales, service, and rental suite purpose-built for heavy equipment, with native OEM integrations (Caterpillar, John Deere), versus point tools or generic ERPs."
   },
   "industry_analysis": {
-    "summary": "Heavy equipment dealers and rental houses sit under overlapping regulatory pressure (OSHA safety documentation, EPA Tier 4 emissions with Tier 5 on the horizon, Section 232 tariff cost pressure) while three structural forces compound: the rental-over-ownership shift adding volume and back-office complexity, a skilled labor shortage forcing operational efficiency, and telematics/digitization becoming table stakes. Compliance-triggered and event-triggered demand is observable in public federal databases.",
+    "macro_moment": "Heavy equipment dealers and rental houses sit under overlapping regulatory pressure (OSHA safety documentation, EPA Tier 4 emissions with Tier 5 on the horizon, Section 232 tariff cost pressure) while three structural forces compound: the rental-over-ownership shift adding volume and back-office complexity, a skilled labor shortage forcing operational efficiency, and telematics/digitization becoming table stakes. Compliance-triggered and event-triggered demand is observable in public federal databases.",
     "forces": [
       {
         "force_id": "F1",
@@ -84,33 +72,85 @@
           "fact": "OSHA penalties reach $16,550 per serious violation and $165,514 per willful or repeated violation under the 2025 penalty schedule.",
           "value": "$165,514",
           "fact_type": "amount",
-          "source": { "name": "OSHA civil penalty amounts", "publisher": "U.S. Department of Labor, OSHA", "url": "https://www.osha.gov/penalties", "as_of": "2025", "access_class": "public" }
+          "source": {
+            "name": "OSHA civil penalty amounts",
+            "publisher": "U.S. Department of Labor, OSHA",
+            "url": "https://www.osha.gov/penalties",
+            "as_of": "2025",
+            "access_class": "public"
+          }
         },
         {
           "fact": "Pre-shift equipment inspections are required under 29 CFR 1926.20 and 29 CFR 1926.600, the standards governing equipment inspection documentation.",
           "value": "29 CFR 1926.600",
           "fact_type": "name",
-          "source": { "name": "29 CFR 1926 Subpart O and general safety provisions", "publisher": "U.S. Government (eCFR)", "url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926", "as_of": "Current", "access_class": "public" }
+          "source": {
+            "name": "29 CFR 1926 Subpart O and general safety provisions",
+            "publisher": "U.S. Government (eCFR)",
+            "url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926",
+            "as_of": "Current",
+            "access_class": "public"
+          }
         },
         {
           "fact": "OSHA IMIS contains over 3 million federal and state-plan inspection records since 1972, updated daily, searchable by establishment name, SIC/NAICS, state, and date range.",
           "value": "3 million",
           "fact_type": "number",
-          "source": { "name": "OSHA IMIS inspection database", "publisher": "U.S. Department of Labor, OSHA", "url": "https://www.osha.gov/ords/imis/establishment.html", "as_of": "July 2026", "access_class": "public" }
+          "source": {
+            "name": "OSHA IMIS inspection database",
+            "publisher": "U.S. Department of Labor, OSHA",
+            "url": "https://www.osha.gov/ords/imis/establishment.html",
+            "as_of": "July 2026",
+            "access_class": "public"
+          }
         }
       ],
       "data_sources": [
-        { "name": "OSHA IMIS", "url": "https://www.osha.gov/ords/imis/establishment.html", "signal": "Establishment-level citations: name, address, date, violation type, penalty. EDP source.", "access": "Free, no login. UI is human-usable; the DOL programmatic API (enforcedata.dol.gov) is retired as of Feb 2026, so bulk pulls are manual state-by-state exports." },
-        { "name": "State contractor licensing boards (TX TDLR, CA CSLB, FL DBPR, GA SoS, NC LBGC)", "signal": "Active status, phone, classifications, multi-license = multi-location. Enrichment layer.", "access": "Free; bulk exports in TX, CA, FL." },
-        { "name": "EPA ECHO", "url": "https://echo.epa.gov", "signal": "Secondary compliance exposure (CAA diesel, RCRA shop waste). Double-exposure accounts get elevated urgency.", "access": "Free; ECHO Exporter bulk file available." },
-        { "name": "AED Member Directory", "url": "https://aednet.org/membership", "signal": "Qualification overlay: members average $40M+ revenue, 80 employees.", "access": "Full directory requires AED membership; partial lists public. Treated as proprietary for MWR asymmetry purposes." }
+        {
+          "name": "OSHA IMIS",
+          "url": "https://www.osha.gov/ords/imis/establishment.html",
+          "signal": "Establishment-level citations: name, address, date, violation type, penalty. EDP source.",
+          "access": "Free, no login. UI is human-usable; the DOL programmatic API (enforcedata.dol.gov) is retired as of Feb 2026, so bulk pulls are manual state-by-state exports."
+        },
+        {
+          "name": "State contractor licensing boards (TX TDLR, CA CSLB, FL DBPR, GA SoS, NC LBGC)",
+          "signal": "Active status, phone, classifications, multi-license = multi-location. Enrichment layer.",
+          "access": "Free; bulk exports in TX, CA, FL."
+        },
+        {
+          "name": "EPA ECHO",
+          "url": "https://echo.epa.gov",
+          "signal": "Secondary compliance exposure (CAA diesel, RCRA shop waste). Double-exposure accounts get elevated urgency.",
+          "access": "Free; ECHO Exporter bulk file available."
+        },
+        {
+          "name": "AED Member Directory",
+          "url": "https://aednet.org/membership",
+          "signal": "Qualification overlay: members average $40M+ revenue, 80 employees.",
+          "access": "Full directory requires AED membership; partial lists public. Treated as proprietary for MWR asymmetry purposes."
+        }
       ],
       "buyer_motivation": "This buyer is managing legal liability, not shopping for software. The evaluation window opens when an inspector walks the yard, a near-miss occurs, or the insurance renewal reprices. Citation-driven buyers move fast, with GM/VP budget authority and no lengthy committee, fitting the 60-day cycle.",
-      "viability_scores": { "urgency": 5, "observability": 5, "value_prop_fit": 5, "buyer_resonance": 4, "market_density": 4 },
-      "segment_size": { "organizations": 1200, "contacts_per_org": 4, "total_contacts": 4800, "decision_maker_titles": ["General Manager", "VP of Operations", "Director of Rental", "Safety Manager"] },
+      "viability_scores": {
+        "urgency": 5,
+        "observability": 5,
+        "value_prop_fit": 5,
+        "buyer_resonance": 4,
+        "market_density": 4
+      },
+      "segment_size": {
+        "organizations": 1200,
+        "contacts_per_org": 4,
+        "total_contacts": 4800,
+        "decision_maker_titles": [
+          "General Manager",
+          "VP of Operations",
+          "Director of Rental",
+          "Safety Manager"
+        ]
+      },
       "acv_range": "~$25K",
-      "pvp_angle": "RULED (Doug, July 28, 2026): corridor demand synthesis. The OSHA citation is the FINDING signal only (membership, timing, pain proof); it never appears in message content, because the buyer's own record fails GS6 by the expertise barrier and reads as surveillance. The TELLING material is corridor demand data the buyer does not track: EMMA bond issuances and FHWA/IIJA awards over $50M within 50-100 miles of the member's yard, translated into forward utilization pressure and an operational prep action. Message shape: name the funded project and amount, state the distance from their yard, state the historical effect on corridor fleet availability, deliver the prep checklist as independently useful content. Requires per-member yard address (present in the IMIS record) and a resolved_conditions entry for corridor proximity (project, amount, distance, source) so every corridor claim is entailed, never conditional.",
-      "telling_sources_note": "Corridor telling data comes from the Bronze segment's data_sources (MSRB EMMA, FHWA IIJA tracker, USAspending.gov). Finding and telling sources are deliberately different databases: GS6 material is second-order synthesis computed across entities, never first-order retrieval about the recipient."
+      "pvp_angle": "RULED (Doug, July 28, 2026): corridor demand synthesis. The OSHA citation is the FINDING signal only (membership, timing, pain proof); it never appears in message content, because the buyer's own record fails GS6 by the expertise barrier and reads as surveillance. The TELLING material is corridor demand data the buyer does not track: EMMA bond issuances and FHWA/IIJA awards over $50M within 50-100 miles of the member's yard, translated into forward utilization pressure and an operational prep action. Message shape: name the funded project and amount, state the distance from their yard, state the historical effect on corridor fleet availability, deliver the prep checklist as independently useful content. Requires per-member yard address (present in the IMIS record) and a resolved_conditions entry for corridor proximity (project, amount, distance, source) so every corridor claim is entailed, never conditional."
     },
     {
       "segment_id": "silver-rollup-casualties",
@@ -135,23 +175,64 @@
           "fact": "Tuckahoe Holdings, which acquired GDN Equipment, continued expanding the platform with the acquisition of Triangle Equipment, part of the structured dealership consolidation push.",
           "value": "Triangle Equipment",
           "fact_type": "name",
-          "source": { "name": "Trade press coverage of Tuckahoe Holdings dealership acquisitions", "publisher": "For Construction Pros / Equipment Today", "url": "https://www.forconstructionpros.com", "as_of": "2025-2026", "access_class": "public" }
+          "source": {
+            "name": "Trade press coverage of Tuckahoe Holdings dealership acquisitions",
+            "publisher": "For Construction Pros / Equipment Today",
+            "url": "https://www.forconstructionpros.com",
+            "as_of": "2025-2026",
+            "access_class": "public"
+          }
         },
         {
           "fact": "Wolter's investment from BBH has supported several acquisitions across the East and Southeast.",
           "value": "Wolter",
           "fact_type": "name",
-          "source": { "name": "Trade press coverage of Wolter/BBH equipment distribution investment", "publisher": "For Construction Pros / Equipment Today", "url": "https://www.forconstructionpros.com", "as_of": "2025-2026", "access_class": "public" }
+          "source": {
+            "name": "Trade press coverage of Wolter/BBH equipment distribution investment",
+            "publisher": "For Construction Pros / Equipment Today",
+            "url": "https://www.forconstructionpros.com",
+            "as_of": "2025-2026",
+            "access_class": "public"
+          }
         }
       ],
       "data_sources": [
-        { "name": "PE portfolio pages (Banneker Partners, H.I.G. Capital, Altus Capital Partners)", "signal": "New platform additions per quarter. EDP trigger source.", "access": "Free; ongoing monitoring." },
-        { "name": "SAM.gov entity registrations", "url": "https://sam.gov", "signal": "Multiple registrations under related EINs/parents confirm roll-up structure and integration complexity.", "access": "Free; no account for basic search." },
-        { "name": "Trade press (Equipment Today, Rental Equipment Register, International Rental News, AED NewsWatch)", "signal": "Deal announcements with dates; each is a timed 30-90 day outreach trigger.", "access": "Free; Google Alerts recommended." }
+        {
+          "name": "PE portfolio pages (Banneker Partners, H.I.G. Capital, Altus Capital Partners)",
+          "signal": "New platform additions per quarter. EDP trigger source.",
+          "access": "Free; ongoing monitoring."
+        },
+        {
+          "name": "SAM.gov entity registrations",
+          "url": "https://sam.gov",
+          "signal": "Multiple registrations under related EINs/parents confirm roll-up structure and integration complexity.",
+          "access": "Free; no account for basic search."
+        },
+        {
+          "name": "Trade press (Equipment Today, Rental Equipment Register, International Rental News, AED NewsWatch)",
+          "signal": "Deal announcements with dates; each is a timed 30-90 day outreach trigger.",
+          "access": "Free; Google Alerts recommended."
+        }
       ],
       "buyer_motivation": "The newly installed operations director or CTO at a roll-up is evaluated on making the parts work as one. Post-acquisition, incumbent systems shift from 'aging' to 'actively blocking integration,' making consolidation a mandate with PE-backed budget, hottest 90-180 days post-close.",
-      "viability_scores": { "urgency": 5, "observability": 4, "value_prop_fit": 5, "buyer_resonance": 5, "market_density": 3 },
-      "segment_size": { "organizations": 650, "contacts_per_org": 4, "total_contacts": 2600, "decision_maker_titles": ["PE Operating Partner", "VP of Operations", "Director of IT / CTO", "COO"] },
+      "viability_scores": {
+        "urgency": 5,
+        "observability": 4,
+        "value_prop_fit": 5,
+        "buyer_resonance": 5,
+        "market_density": 3
+      },
+      "segment_size": {
+        "organizations": 650,
+        "contacts_per_org": 4,
+        "total_contacts": 2600,
+        "decision_maker_titles": [
+          "PE Operating Partner",
+          "VP of Operations",
+          "Director of IT / CTO",
+          "COO"
+        ]
+      },
       "acv_range": "~$25K (higher per-account potential)",
       "pvp_angle": "Open with the specific acquisition by name and the integration reality (systems count, Year 1 cost of disconnected operations) before any product mention. The deal announcement itself is the EDP."
     },
@@ -178,40 +259,91 @@
           "fact": "The equipment rental market is projected to grow 5.7% in 2025 to nearly $82.6 billion, topping the prior-year record of $78.2 billion.",
           "value": "$82.6 billion",
           "fact_type": "amount",
-          "source": { "name": "American Rental Association market forecast", "publisher": "American Rental Association", "url": "https://www.ararental.org", "as_of": "2025", "access_class": "public" }
+          "source": {
+            "name": "American Rental Association market forecast",
+            "publisher": "American Rental Association",
+            "url": "https://www.ararental.org",
+            "as_of": "2025",
+            "access_class": "public"
+          }
         },
         {
           "fact": "IIJA provides the basis for Federal Highway Administration programs and activities through September 30, 2026, with funding status published and updated monthly.",
           "value": "September 30, 2026",
           "fact_type": "date",
-          "source": { "name": "IIJA funding status", "publisher": "U.S. Department of Transportation", "url": "https://www.transportation.gov/infrastructure-investment-and-jobs-act", "as_of": "April 30, 2026 report", "access_class": "public" }
+          "source": {
+            "name": "IIJA funding status",
+            "publisher": "U.S. Department of Transportation",
+            "url": "https://www.transportation.gov/infrastructure-investment-and-jobs-act",
+            "as_of": "April 30, 2026 report",
+            "access_class": "public"
+          }
         },
         {
           "fact": "Illinois has earmarked $21.3 billion for highway and bridge upgrades that rely heavily on excavators, pavers, and aerial platforms.",
           "value": "$21.3 billion",
           "fact_type": "amount",
-          "source": { "name": "Illinois multi-year transportation improvement program", "publisher": "Illinois Department of Transportation", "url": "https://idot.illinois.gov", "as_of": "2025", "access_class": "public" }
+          "source": {
+            "name": "Illinois multi-year transportation improvement program",
+            "publisher": "Illinois Department of Transportation",
+            "url": "https://idot.illinois.gov",
+            "as_of": "2025",
+            "access_class": "public"
+          }
         }
       ],
       "data_sources": [
-        { "name": "MSRB EMMA", "url": "https://emma.msrb.org", "signal": "Bond issuer, project description, amount, geography for $50M+ infrastructure issuances. EDP source.", "access": "Free, no registration." },
-        { "name": "FHWA / transportation.gov IIJA tracker", "url": "https://www.transportation.gov/infrastructure-investment-and-jobs-act", "signal": "Monthly funding status by state; corridor mapping. Combine with USAspending.gov for prime contractors.", "access": "Free, updated monthly." },
-        { "name": "Census County Business Patterns (NAICS 532412)", "url": "https://data.census.gov", "signal": "Operator density per county within 50-100 miles of each corridor.", "access": "Free, annual." }
+        {
+          "name": "MSRB EMMA",
+          "url": "https://emma.msrb.org",
+          "signal": "Bond issuer, project description, amount, geography for $50M+ infrastructure issuances. EDP source.",
+          "access": "Free, no registration."
+        },
+        {
+          "name": "FHWA / transportation.gov IIJA tracker",
+          "url": "https://www.transportation.gov/infrastructure-investment-and-jobs-act",
+          "signal": "Monthly funding status by state; corridor mapping. Combine with USAspending.gov for prime contractors.",
+          "access": "Free, updated monthly."
+        },
+        {
+          "name": "Census County Business Patterns (NAICS 532412)",
+          "url": "https://data.census.gov",
+          "signal": "Operator density per county within 50-100 miles of each corridor.",
+          "access": "Free, annual."
+        }
       ],
       "buyer_motivation": "Motivated by lost revenue, not threat: contracts lost because availability couldn't be confirmed or a machine sat in service during a peak window. An operator who just signed municipal contracts must scale operational infrastructure before the first delivery date, a 60-day buying window.",
-      "viability_scores": { "urgency": 3, "observability": 4, "value_prop_fit": 4, "buyer_resonance": 3, "market_density": 5 },
-      "segment_size": { "organizations": 1100, "contacts_per_org": 4, "total_contacts": 4400, "decision_maker_titles": ["General Manager", "Director of Rental", "Director of Operations", "Fleet Manager"] },
+      "viability_scores": {
+        "urgency": 3,
+        "observability": 4,
+        "value_prop_fit": 4,
+        "buyer_resonance": 3,
+        "market_density": 5
+      },
+      "segment_size": {
+        "organizations": 1100,
+        "contacts_per_org": 4,
+        "total_contacts": 4400,
+        "decision_maker_titles": [
+          "General Manager",
+          "Director of Rental",
+          "Director of Operations",
+          "Fleet Manager"
+        ]
+      },
       "acv_range": "~$25K",
       "pvp_angle": "Open with the named project and quantified corridor demand (bond amount, distance from their yard, expected utilization effect) and the operational preparation playbook, before any product mention. The bond is the EDP."
     }
   ],
   "verdict": {
-    "key_reasons": [
+    "rating": "Strong Fit",
+    "reasons": [
       "The Gold segment's EDP is a federal enforcement database (OSHA IMIS) that names cited establishments by name, address, violation type, and penalty, updated daily: a government-maintained roster of companies with the documented operational failure Texada's service module eliminates.",
       "The Silver segment rides a confirmed, accelerating M&A wave where every announced deal is a publicly observable integration crisis with a timed 90-180 day buying window.",
-      "The Bronze segment's demand signal is a live, monthly-updated federal funding tracker (IIJA/FHWA) plus the EMMA bond repository, making corridor-level demand surges visible before operators raise their hands."
+      "The Bronze segment's demand signal is a live, monthly-updated federal funding tracker (IIJA/FHWA) plus the EMMA bond repository, making corridor-level demand surges visible before operators raise their hands.",
+      "Confidence by segment: High for Gold, Medium-High for Silver, Medium for Bronze. Recommended validation before full list build: a 50-record Gold pilot (200 emails, 30-day MBR measurement)."
     ],
     "recommended_segment_id": "gold-compliance-cliff",
-    "confidence": "High for Gold; Medium-High for Silver; Medium for Bronze. Recommended validation: a 50-record Gold pilot (200 emails, 30-day MBR measurement) before full list build."
+    "confidence": "High"
   }
 }

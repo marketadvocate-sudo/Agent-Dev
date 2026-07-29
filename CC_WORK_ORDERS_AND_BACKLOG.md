@@ -166,3 +166,22 @@ IMIS, whose DOL programmatic API is retired (last working Feb 2026); the UI is
 human-usable only, so the members roster is a human/Clay-provider pull, not an agent
 fetch. The AED member directory is membership-gated and is classed proprietary (it
 cannot seed GS6 asymmetry). Feed both to the FHC access-architecture work.
+
+---
+
+## Federated design session (open contract-design questions, not for action now)
+
+Surfaced by the Texada artifact; neither gets decided mid-flight on v2.0.
+
+**D1. Should the FHC contract permit `_`-prefixed annotation/provenance fields?** The
+Texada artifact carried `_conversion_notes`, `_facts_needing_sources`, `_quality_flags`,
+and a segment-level `telling_sources_note`, all rejected by `additionalProperties:
+false`. For now they live verbatim in a sidecar (`fixtures/fhc_output.texada.NOTES.md`).
+The question is whether the contract should have a defined home for provenance and
+annotations rather than pushing them to a sidecar.
+
+**D2. Should `verdict.confidence` be per-segment rather than a single enum?** FHC
+produced "High for Gold; Medium-High for Silver; Medium for Bronze" plus a validation
+recommendation; the contract models one enum (High|Medium|Low). For now confidence was
+set to "High" (the recommended Gold segment) and the per-segment detail moved into
+`verdict.reasons`. The question is whether confidence should be structured per segment.
