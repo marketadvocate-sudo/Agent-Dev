@@ -1,0 +1,25 @@
+{
+  "mwr_version": "1.5",
+  "source_artifact": {
+    "source_agent": "Finding Hidden Customers Agent v0.5 Beta",
+    "schema_version": "2.0",
+    "company": "Texada Software"
+  },
+  "scope_used": "Silver",
+  "override": true,
+  "segment_verdicts": [
+    {
+      "segment_id": "silver-rollup-casualties",
+      "tier": "Silver",
+      "name": "The Roll-Up Integration Casualties",
+      "recommended": false,
+      "pvp_achievable": "no",
+      "gap": {
+        "failed_standards": [7],
+        "what_is_missing": "Deterministic Stage-3 decline on Standard 7 (type-span). The segment's specific_facts are two entries both of fact_type 'name' (Triangle Equipment, Wolter), so the specifics span a single fact_type; Standard 7 requires at least two fact_type values with at least one name/location/event. The exemplar cannot be built. Beyond the mechanical failure, the segment also lacks telling material: its only public specifics and its EDP are the buyer's own completed acquisitions (a finding signal), which under the ruling 'the EDP finds, it does not tell' cannot seed Standard 6 information asymmetry (the buyer knows its own deals) and yields no directive-lens insight for Standard 4. Members were stamped (Tuckahoe Holdings, Wolter) and satisfy entailment, but membership does not supply additional fact_types for Standard 7.",
+        "input_that_would_close_it": "FHC must source telling data for this segment: public cross-entity synthesis the roll-up buyer does not already know (analogous to the Gold segment's corridor demand synthesis), sourced from a database different from the acquisition finding signal, plus specific_facts that span at least two fact_type values (for example a dated integration-window figure or a dollar amount alongside the named acquirers). The acquisition announcement remains the finding signal only.",
+        "entailment_decline": false
+      }
+    }
+  ]
+}

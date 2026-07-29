@@ -1,0 +1,172 @@
+{
+  "schema_version": "2.0",
+  "source_agent": "Finding Hidden Customers Agent v0.5 Beta",
+  "brand_profile": {
+    "company": "Texada Software",
+    "category": "Equipment growth platform (SaaS) for the heavy equipment industry",
+    "value_prop": "An integrated platform for equipment dealerships and rental businesses combining an Industrial CRM, Equipment-Aware Service Management, and Intelligent Rental Management in a single suite, purpose-built for heavy equipment with native OEM integrations (Caterpillar, John Deere). Founded 1984, ~170 employees, ~$18.4M revenue, backed by Banneker Partners. ACV ~$25,000, ~60-day sales cycle. Buyers: VP Operations, General Manager, Director of Rental/Service, IT Director at dealerships and rental houses.",
+    "differentiator": "The uniquely integrated sales, service, and rental suite purpose-built for heavy equipment, with native OEM integrations (Caterpillar, John Deere), versus point tools or generic ERPs."
+  },
+  "industry_analysis": {
+    "macro_moment": "Heavy equipment dealers and rental houses sit under overlapping regulatory pressure (OSHA safety documentation, EPA Tier 4 emissions with Tier 5 on the horizon, Section 232 tariff cost pressure) while three structural forces compound: the rental-over-ownership shift adding volume and back-office complexity, a skilled labor shortage forcing operational efficiency, and telematics/digitization becoming table stakes. Compliance-triggered and event-triggered demand is observable in public federal databases.",
+    "forces": [
+      {
+        "force_id": "F1",
+        "name": "OSHA enforcement pressure on inspection documentation",
+        "sector": "Rental houses and dealerships",
+        "description": "OSHA penalties reach $16,550 per serious violation and $165,514 for willful or repeated violations (2025 schedule). The most common industry findings are documentation failures: missing daily inspections, operator training records, equipment condition records. Enforcement priorities favor digital documentation."
+      },
+      {
+        "force_id": "F2",
+        "name": "EPA Tier 4 compliance and Tier 5 horizon",
+        "sector": "Fleet operations",
+        "description": "Tier 4 standards require ~90% NOx and ~95% PM reductions versus older engines, raising maintenance burden (DPF cleaning, DEF consumption). CARB has opened Tier 5 workshops targeting further 50-90% reductions in the 2028-2030 timeframe."
+      },
+      {
+        "force_id": "F3",
+        "name": "Section 232 tariff cost pressure",
+        "sector": "Capital equipment",
+        "description": "A 25% duty on imported medium and heavy duty trucks and many parts effective November 1, 2025; firms attribute ~40% of 2025-2026 unit cost growth to tariffs. Capital spending delays push emphasis to utilization and margin on existing fleets."
+      },
+      {
+        "force_id": "F4",
+        "name": "Rental-over-ownership shift",
+        "sector": "Construction equipment rental",
+        "description": "Heavy construction equipment rental projected to grow from $98.77B (2025) to $146.37B (2035). More rental volume means more contracts, logistics, and service obligations pressing on back-office systems."
+      },
+      {
+        "force_id": "F5",
+        "name": "Skilled labor shortage",
+        "sector": "Dealership service operations",
+        "description": "Construction needs ~454,000 additional workers in 2025; the technician shortage drives revenue and earnings losses at dealerships. Operators must run more volume through fewer, less-experienced staff, which requires guided digital workflows."
+      },
+      {
+        "force_id": "F6",
+        "name": "M&A consolidation wave",
+        "sector": "Dealer groups and rental platforms",
+        "description": "Consolidation was a core 2025 theme and is set to accelerate in 2026, with PE-backed roll-ups combining smaller operators. Every closed deal creates a multi-system integration problem with a 90-180 day post-close software consolidation window."
+      }
+    ]
+  },
+  "segments": [
+    {
+      "segment_id": "silver-rollup-casualties",
+      "tier": "Silver",
+      "name": "The Roll-Up Integration Casualties",
+      "recommended": false,
+      "sector": "Regional dealer groups and PE-backed rental platforms, 3-20 locations, 1-4 acquisitions in the last 18 months",
+      "pain_buyer_perspective": "Post-acquisition operators running different rental software at each acquired location: no unified fleet visibility, duplicate data entry, service scheduling by phone between branch managers, no consolidated financial reporting, no single customer view across branches.",
+      "systemic_condition": "An accelerating consolidation wave: dealer groups and PE roll-ups combining smaller operators through 2025-2026, with interest-rate pressure making smaller operators tuck-in targets. Every closed deal starts a 90-180 day board-level software consolidation window.",
+      "edp": {
+        "signal": "A completed acquisition announced within the last 90 days, observable via trade press deal announcements, PE portfolio page additions, and SAM.gov multi-entity registrations under related parents.",
+        "source": {
+          "name": "Equipment industry trade press deal announcements (Equipment Today, Rental Equipment Register, AED NewsWatch)",
+          "publisher": "For Construction Pros / Equipment Today",
+          "url": "https://www.forconstructionpros.com",
+          "as_of": "Rolling; outreach window 30-90 days post-announcement",
+          "access_class": "public"
+        }
+      },
+      "specific_facts": [
+        {
+          "fact": "Tuckahoe Holdings, which acquired GDN Equipment, continued expanding the platform with the acquisition of Triangle Equipment, part of the structured dealership consolidation push.",
+          "value": "Triangle Equipment",
+          "fact_type": "name",
+          "source": {
+            "name": "Trade press coverage of Tuckahoe Holdings dealership acquisitions",
+            "publisher": "For Construction Pros / Equipment Today",
+            "url": "https://www.forconstructionpros.com",
+            "as_of": "2025-2026",
+            "access_class": "public"
+          }
+        },
+        {
+          "fact": "Wolter's investment from BBH has supported several acquisitions across the East and Southeast.",
+          "value": "Wolter",
+          "fact_type": "name",
+          "source": {
+            "name": "Trade press coverage of Wolter/BBH equipment distribution investment",
+            "publisher": "For Construction Pros / Equipment Today",
+            "url": "https://www.forconstructionpros.com",
+            "as_of": "2025-2026",
+            "access_class": "public"
+          }
+        }
+      ],
+      "data_sources": [
+        {
+          "name": "PE portfolio pages (Banneker Partners, H.I.G. Capital, Altus Capital Partners)",
+          "signal": "New platform additions per quarter. EDP trigger source.",
+          "access": "Free; ongoing monitoring."
+        },
+        {
+          "name": "SAM.gov entity registrations",
+          "url": "https://sam.gov",
+          "signal": "Multiple registrations under related EINs/parents confirm roll-up structure and integration complexity.",
+          "access": "Free; no account for basic search."
+        },
+        {
+          "name": "Trade press (Equipment Today, Rental Equipment Register, International Rental News, AED NewsWatch)",
+          "signal": "Deal announcements with dates; each is a timed 30-90 day outreach trigger.",
+          "access": "Free; Google Alerts recommended."
+        }
+      ],
+      "buyer_motivation": "The newly installed operations director or CTO at a roll-up is evaluated on making the parts work as one. Post-acquisition, incumbent systems shift from 'aging' to 'actively blocking integration,' making consolidation a mandate with PE-backed budget, hottest 90-180 days post-close.",
+      "viability_scores": {
+        "urgency": 5,
+        "observability": 4,
+        "value_prop_fit": 5,
+        "buyer_resonance": 5,
+        "market_density": 3
+      },
+      "segment_size": {
+        "organizations": 650,
+        "contacts_per_org": 4,
+        "total_contacts": 2600,
+        "decision_maker_titles": [
+          "PE Operating Partner",
+          "VP of Operations",
+          "Director of IT / CTO",
+          "COO"
+        ]
+      },
+      "acv_range": "~$25K (higher per-account potential)",
+      "pvp_angle": "Open with the specific acquisition by name and the integration reality (systems count, Year 1 cost of disconnected operations) before any product mention. The deal announcement itself is the EDP.",
+      "members": [
+        {
+          "name": "Tuckahoe Holdings",
+          "edp_value": "completed acquisitions of GDN Equipment and Triangle Equipment",
+          "source": {
+            "name": "Trade press coverage of Tuckahoe Holdings dealership acquisitions",
+            "publisher": "For Construction Pros / Equipment Today",
+            "url": "https://www.forconstructionpros.com",
+            "as_of": "2025-2026",
+            "access_class": "public"
+          }
+        },
+        {
+          "name": "Wolter",
+          "edp_value": "BBH-backed acquisitions across the East and Southeast",
+          "source": {
+            "name": "Trade press coverage of Wolter/BBH equipment distribution investment",
+            "publisher": "For Construction Pros / Equipment Today",
+            "url": "https://www.forconstructionpros.com",
+            "as_of": "2025-2026",
+            "access_class": "public"
+          }
+        }
+      ]
+    }
+  ],
+  "verdict": {
+    "rating": "Strong Fit",
+    "reasons": [
+      "The Gold segment's EDP is a federal enforcement database (OSHA IMIS) that names cited establishments by name, address, violation type, and penalty, updated daily: a government-maintained roster of companies with the documented operational failure Texada's service module eliminates.",
+      "The Silver segment rides a confirmed, accelerating M&A wave where every announced deal is a publicly observable integration crisis with a timed 90-180 day buying window.",
+      "The Bronze segment's demand signal is a live, monthly-updated federal funding tracker (IIJA/FHWA) plus the EMMA bond repository, making corridor-level demand surges visible before operators raise their hands.",
+      "Confidence by segment: High for Gold, Medium-High for Silver, Medium for Bronze. Recommended validation before full list build: a 50-record Gold pilot (200 emails, 30-day MBR measurement)."
+    ],
+    "recommended_segment_id": "gold-compliance-cliff",
+    "confidence": "High"
+  }
+}
