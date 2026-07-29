@@ -1,0 +1,54 @@
+{
+  "mwr_version": "1.5",
+  "source_artifact": {
+    "source_agent": "FHC v0.5 Beta",
+    "schema_version": "2.0",
+    "generated_at": "2026-06-15T00:00:00Z",
+    "company": "Health Management Associates (HMA)"
+  },
+  "scope_used": "Gold",
+  "override": false,
+  "segment_verdicts": [
+    {
+      "segment_id": "gold-january-sprinters",
+      "tier": "Gold",
+      "name": "The January Sprinters",
+      "recommended": true,
+      "pvp_achievable": "no",
+      "gap": {
+        "failed_standards": [1, 4, 5, 6, 7],
+        "what_is_missing": "The message has no insight. Standard 4 fails the one-sentence test: it yields an observation (states that locked exemption assumptions before June 1 carry the most rework), not a directive lens the reader can act on. That failure fails the action test (Standard 1) and cascades Standards 5, 6, and 7 per the keystone rule. It is ingredient-stuffing: concrete public facts with no insight to serve. Five misses is PQS; rejected, no revision pass at two or more.",
+        "input_that_would_close_it": "A single directive-lens insight the reader can act on, built from the same public facts, then a rebuild around it under the v1.5 format rules (150-word body, no buyer-conditional, no sender credential in the body). See GATE_RUN_REPORT.v1.5.hma.md for the passing rebuild.",
+        "entailment_decline": false
+      },
+      "rejected_exemplar": {
+        "subject_line": "The June 1 frailty rule moved the exemption math you were planning around",
+        "eyebrow_line": "A public read on where the 43 states actually stand after CMS changed the definition",
+        "message_body": "CMS issued an interim final rule on June 1, 2026 that narrowed what counts as medical frailty. If the exemption approach your team built predates it, the ground under that plan moved, and the public KFF Work Requirements Tracker already shows how little slack is left before the January 1, 2027 deadline that all 43 affected states share.\n\nThe tracker also shows the states are not moving together. Nebraska began enforcing federal work requirements early under a May 1, 2026 state plan amendment, while other states still show no declared implementation path. Read next to the June 1 rule, that spread is the story: the states that locked their exemption assumptions before the rule now carry the most rework, and the outreach window between June 30 and August 31, 2026 is already open, so the time to rebuild is not sitting in the future.\n\nThe cost of the build is public too. Iowa's system-change filing puts its work at a minimum of $20 million, and Wisconsin's runs near $6 million for a pair of changes. Most agencies will route that through the IT vendor they already hold. The part the vendor does not touch is the part that just changed: reconciling the new frailty definition with exemption logic, outreach, and eligibility rules before the clock runs out.\n\nThat reconciliation is a policy judgment made under a deadline, and HMA's consultants have made it from the inside. They came out of state Medicaid director and senior policy roles, so the read on what the June 1 rule actually shifts, and what a defensible exemption posture looks like now, comes from people who have answered for that call in the chair you are sitting in.",
+        "facts_used": [
+          { "value": "June 1, 2026", "fact_type": "event", "source_name": "Interim Final Rule on Medicaid Work Requirements", "publisher": "Centers for Medicare & Medicaid Services (CMS)", "access_class": "public" },
+          { "value": "Nebraska", "fact_type": "name", "source_name": "KFF Work Requirements Tracker", "publisher": "KFF", "access_class": "public" },
+          { "value": "43", "fact_type": "number", "source_name": "KFF Work Requirements Tracker", "publisher": "KFF", "access_class": "public" },
+          { "value": "August 31, 2026", "fact_type": "date", "source_name": "2025 reconciliation law (Public Law 119-21)", "publisher": "U.S. Congress", "access_class": "public" },
+          { "value": "$20 million", "fact_type": "amount", "source_name": "State budget and system-change filings (Wisconsin, Iowa)", "publisher": "State of Wisconsin and State of Iowa", "access_class": "public" }
+        ],
+        "seven_standard_check": [
+          { "standard": 1, "name": "Independently useful", "met": false, "failure_type": "independent", "basis": "The action test cannot be completed. Peer cost benchmarks ($20M Iowa, $6M Wisconsin) are trivia to a director under a statutory mandate; nothing in the message changes what the buyer does next." },
+          { "standard": 2, "name": "Relates to the value prop", "met": true, "basis": "The closing paragraph connects the reconciliation gap to HMA's lane. Note: that closing credential paragraph independently violates the v1.5 no-credential-in-body rule (see format_defects); it earns Standard 2 on content but is a format-level defect." },
+          { "standard": 3, "name": "Based on public data", "met": true, "basis": "All load-bearing claims trace to stamped public sources: CMS interim final rule, KFF tracker, Public Law 119-21, state filings. No vendor-published or proprietary sources used." },
+          { "standard": 4, "name": "Translates to meaningful insight", "met": false, "failure_type": "independent", "basis": "Keystone. The one-sentence test produces only an observation (states that locked exemption assumptions before June 1 carry the most rework), not a directive lens. The reader cannot do anything with it." },
+          { "standard": 5, "name": "Goes beyond pain identification", "met": false, "failure_type": "keystone_cascade", "basis": "With no insight, there is nothing to advance the buyer toward; the message stops at 'the ground moved.'" },
+          { "standard": 6, "name": "Creates information asymmetry", "met": false, "failure_type": "keystone_cascade", "basis": "Cross-state material the buyer does not track is present, but asymmetry with no actionable content is knowing things the buyer does not care that you know." },
+          { "standard": 7, "name": "Concrete and specific", "met": false, "failure_type": "keystone_cascade", "basis": "Six dates and two dollar figures with no insight to serve: concrete and specific about nothing." }
+        ],
+        "format_defects": [
+          "Body is far over the v1.5 cap of 150 (165 hard ceiling): gate.word_count measures 283 words.",
+          "Buyer-conditional in paragraph one ('If the exemption approach your team built predates it'), flagged by the entailment rule.",
+          "The insight is not reachable within the first two sentences of the body.",
+          "Closing sender-credential paragraph ('HMA's consultants have made it from the inside...') violates the v1.5 no-credential-in-body rule."
+        ],
+        "provenance": "Produced by the v1.4 agent against the HMA fixture and graded 7/7 under v1.4 criteria, which scored on the presence of ingredients. Overturned by Doug as Kahuna, whose rulings became the v1.5 amendments. The teaching value: v1.4 criteria permitted a message that passed on presence while failing on function. Under v1.5 (keystone, cascade, entailment, format) it is a five-miss PQS rejection: ingredient-stuffing without an insight."
+      }
+    }
+  ]
+}

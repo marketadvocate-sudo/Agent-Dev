@@ -5,16 +5,17 @@ artifact and, per in-scope Gold segment, returns a verdict: **can a PVP-grade
 message be built from this segmentation work, yes or no?** A `yes` is proven by one
 cohort-level exemplar that clears all seven Gold Standards; a `no` names the gap.
 The verdict is the product. The exemplar is evidence, not a deliverable for scaled
-use. See `MWR_CONSTITUTION.md` (v1.4) for the governing law.
+use. See `MWR_CONSTITUTION.md` (v1.5) for the governing law.
 
 ## Layout
 
 | Path | What it is |
 | --- | --- |
-| `MWR_CONSTITUTION.md` | Governing document, v1.4. The agent obeys it; the reviewer rules with it. |
-| `AGENT.md` | The agent spec / system prompt encoding Stages 0 to 6. |
+| `MWR_CONSTITUTION.md` | Governing document, v1.5. The agent obeys it; the reviewer rules with it. |
+| `AGENT.md` | The agent spec / system prompt encoding Stages 0 to 6 (v1.5: insight-first, dependency-ordered grading, entailment). |
 | `GATE_RUN_CHECKLIST.md` | The reviewer's repeatable acceptance checklist (constitution Section 7). |
-| `GATE_RUN_REPORT.hma.md` | A filled checklist: the HMA gate run, the moment of truth. |
+| `GATE_RUN_REPORT.hma.md` | A filled checklist: the HMA gate run under v1.4, the moment of truth. |
+| `GATE_RUN_REPORT.v1.5.hma.md` | The HMA gate run under v1.5 (insight-first, entailed, credential-free, under length). |
 | `DECISIONS.md` | Persistent log of Doug's rulings behind each constitution version. |
 | `contracts/fhc_output.schema.json` | **Input** contract. The sole accepted input. |
 | `contracts/mwr_output.schema.json` | **Output** contract. Per-segment `pvp_achievable` + `revised`; `run_decline.kind`. |
@@ -24,6 +25,7 @@ use. See `MWR_CONSTITUTION.md` (v1.4) for the governing law.
 | `fixtures/fhc_output.example.brand_gap.json` | Empty `value_prop` to trigger a run-level decline. |
 | `fixtures/fhc_output.example.empty_scope.json` | Complete brand, only a Silver segment: the Gold scope is empty. |
 | `examples/mwr_output.*.json` | The gate run over each fixture (see matrix below). |
+| `examples/mwr_output.hma.REJECTED.json` | **Negative** golden: a v1.4 message graded under v1.5, rejected 5-miss PQS (ingredient-stuffing without an insight). |
 | `tools/gate.py` | Deterministic harness for the mechanical stages and schema validation. |
 | `tools/selftest.py` | Pins expected outcomes for every fixture and validates every artifact. |
 
@@ -66,6 +68,7 @@ Every branch of the output contract is exercised by a fixture/output pair:
 | `thin` | Gold (default) | `no` (GS 6, 7) | Per-segment decline naming the gap and the input that closes it |
 | `brand_gap` | Gold (default) | run-level decline (`kind: brand_gap`) | One decline for an empty `value_prop`, not N identical no's |
 | `empty_scope` | Gold (default) | run-level decline (`kind: empty_scope`) | Null result: no Gold segment exists, so nothing to gate (not a "no") |
+| `hma.REJECTED` | Gold (default) | `no` (GS 1, 4, 5, 6, 7) | **Negative golden.** A 7/7-on-presence v1.4 message, graded under v1.5, fails the keystone (Standard 4) and cascades 5/6/7: ingredient-stuffing without an insight |
 
 Note on fidelity: the `hma` fixture's Silver segment declines on Standard 7 (its
 specifics are all quantities, no name/location/event anchor), so an override would
@@ -93,3 +96,11 @@ against the public KFF Work Requirements Tracker (Nebraska enforcing early as of
 May 1, 2026 while non-movers have no declared path), on the fixed January 1, 2027
 clock. Verdict: **`yes`**, cleared on the first pass, all seven standards met from
 five public facts spanning five fact types.
+
+**Under v1.5** the same segment rebuilds differently: the committed golden
+(`examples/mwr_output.hma.json`) is a **pre-v1.5 artifact** and no longer passes the
+new mechanical lint (its 256-word body and its buyer-conditional "if your exemption
+planning predates that rule" both violate v1.5). The v1.5 agent produces an
+insight-first, entailed, credential-free message under 150 words instead; see
+`GATE_RUN_REPORT.v1.5.hma.md`. The ratified v1.5 golden will be produced by the agent
+from a forthcoming Texada Software FHC artifact (backlog item 1), not hand-authored.

@@ -2,15 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cannonballgtm.com/contracts/mwr_output.schema.json",
   "title": "MWR Output Artifact",
-  "description": "The complete, structured output of the Messages Worth Receiving (MWR) gate. MWR consumes one FHC output artifact and returns, per in-scope segment, a binary verdict: can a PVP-grade message be built from this segmentation work, yes or no. 'yes' carries an exemplar message as evidence; 'no' carries a named gap. Governed by MWR_CONSTITUTION.md v1.4.",
+  "description": "The complete, structured output of the Messages Worth Receiving (MWR) gate. MWR consumes one FHC output artifact and returns, per in-scope segment, a binary verdict: can a PVP-grade message be built from this segmentation work, yes or no. 'yes' carries an exemplar message as evidence; 'no' carries a named gap. Governed by MWR_CONSTITUTION.md v1.5.",
   "type": "object",
   "required": ["mwr_version", "source_artifact", "scope_used", "segment_verdicts"],
   "additionalProperties": false,
   "properties": {
     "mwr_version": {
       "type": "string",
-      "description": "Version of the MWR constitution this run was graded against. Example: 1.4",
-      "examples": ["1.4"]
+      "description": "Version of the MWR constitution this run was graded against. Example: 1.5",
+      "examples": ["1.5"]
     },
     "source_artifact": {
       "type": "object",
@@ -94,7 +94,7 @@
   "$defs": {
     "standard_check": {
       "type": "object",
-      "description": "The grader's yes/no on a single Gold Standard. No partial credit. Every 'met: true' must cite the basis that earns it; for Standards 3, 6, and 7 the basis must rest on a 'public'-classed source that survives the two mechanical hardening checks.",
+      "description": "The grader's yes/no on a single Gold Standard. No partial credit. Every 'met: true' must cite the basis that earns it; for Standards 3, 6, and 7 the basis must rest on a 'public'-classed source that survives the two mechanical hardening checks. Grading is dependency-ordered (constitution v1.5 Section 7): Standard 4 is graded first, and if it fails, Standards 5, 6, and 7 fail automatically per the keystone rule.",
       "required": ["standard", "name", "met", "basis"],
       "additionalProperties": false,
       "properties": {
@@ -115,6 +115,11 @@
         "basis": {
           "type": "string",
           "description": "On 'met: true', the specific fact/field (and its access_class where the standard requires public) that earns the yes. On 'met: false', why it misses."
+        },
+        "failure_type": {
+          "type": "string",
+          "enum": ["independent", "keystone_cascade"],
+          "description": "Present only on 'met: false'. 'independent' = this standard failed on its own merits. 'keystone_cascade' = Standards 5, 6, or 7 recorded as failed because Standard 4 (the keystone) failed, not judged on their own. Lets the reviewer see whether the downstream standards fell on their own or because the insight did (constitution v1.5)."
         }
       }
     },
@@ -138,16 +143,17 @@
           "default": false
         },
         "exemplar": { "$ref": "#/$defs/exemplar" },
-        "gap": { "$ref": "#/$defs/gap" }
+        "gap": { "$ref": "#/$defs/gap" },
+        "rejected_exemplar": { "$ref": "#/$defs/rejected_exemplar" }
       },
       "allOf": [
         {
-          "description": "A 'yes' carries an exemplar and no gap.",
+          "description": "A 'yes' carries an exemplar, no gap, and no rejected_exemplar.",
           "if": { "properties": { "pvp_achievable": { "const": "yes" } } },
-          "then": { "required": ["exemplar"], "not": { "required": ["gap"] } }
+          "then": { "required": ["exemplar"], "not": { "anyOf": [ { "required": ["gap"] }, { "required": ["rejected_exemplar"] } ] } }
         },
         {
-          "description": "A 'no' carries a gap and no exemplar.",
+          "description": "A 'no' carries a gap and no exemplar. It MAY carry a rejected_exemplar (the graded, rejected message) for a negative/teaching fixture.",
           "if": { "properties": { "pvp_achievable": { "const": "no" } } },
           "then": { "required": ["gap"], "not": { "required": ["exemplar"] } }
         }
@@ -205,7 +211,51 @@
           "description": "The Gold Standard numbers this segment cannot clear (after the single revision pass, if one was attempted)."
         },
         "what_is_missing": { "type": "string", "description": "The concrete gap in the artifact. Example: specific_facts carries one dated value and no named entity." },
-        "input_that_would_close_it": { "type": "string", "description": "What the user would add to the FHC artifact to flip this to 'yes'." }
+        "input_that_would_close_it": { "type": "string", "description": "What the user would add to the FHC artifact to flip this to 'yes'. When entailment_decline is true, this states the FHC work order: which public signal, resolved per member (a members[].edp_value or a resolved_conditions signal), would make the flagged buyer-conditional assertable (constitution v1.5 entailment rule, third exit)." },
+        "entailment_decline": {
+          "type": "boolean",
+          "description": "True when this 'no' is an entailment decline: the message required a claim about the buyer that segment membership does not entail and no per-member signal in the artifact resolves, and the buyer-conditional could not be rewritten away. input_that_would_close_it then carries the FHC work order for the missing per-member signal. Constitution v1.5, entailment rule.",
+          "default": false
+        }
+      }
+    },
+    "rejected_exemplar": {
+      "type": "object",
+      "description": "OPTIONAL and only on a 'no' verdict. The message that was graded and rejected, preserved with its scorecard so the failure is inspectable. Production 'no' verdicts normally carry only a gap; this field exists so a negative/teaching fixture can keep the rejected message and its keystone-cascade scorecard (the failure_type field lives here, on the standard_check entries). Not a deliverable; a record of a rejection.",
+      "required": ["subject_line", "eyebrow_line", "message_body", "seven_standard_check"],
+      "additionalProperties": false,
+      "properties": {
+        "subject_line": { "type": "string" },
+        "eyebrow_line": { "type": "string" },
+        "message_body": { "type": "string", "description": "The rejected message body, kept verbatim. It is NOT expected to pass the v1.5 format or entailment rules; that is the point of preserving it." },
+        "facts_used": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "fact_type", "source_name", "publisher", "access_class"],
+            "additionalProperties": false,
+            "properties": {
+              "value": { "type": "string" },
+              "fact_type": { "type": "string", "enum": ["number", "date", "name", "location", "event", "amount"] },
+              "source_name": { "type": "string" },
+              "publisher": { "type": "string" },
+              "access_class": { "type": "string", "enum": ["public", "vendor_published", "proprietary"] }
+            }
+          }
+        },
+        "seven_standard_check": {
+          "type": "array",
+          "description": "All seven standards, in dependency order, each yes/no with basis and (on a miss) failure_type. Records the keystone cascade that produced the rejection.",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": { "$ref": "#/$defs/standard_check" }
+        },
+        "format_defects": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Format-level failures recorded separately from the standard scorecard: buyer-conditional, over-length body, over-length subject, em-dash, or a sender credential in the body."
+        },
+        "provenance": { "type": "string", "description": "How this rejected message came to be (which agent produced it, under which version it was graded, who overturned it), so the fixture teaches." }
       }
     }
   }

@@ -48,3 +48,59 @@ demonstration matrix, and produce a filled HMA run in that format
 - The self-test CTA check was tightened from a bare `?`-only heuristic to a small
   phrase blocklist. This is a smoke test only; the agent's real CTA guard remains the
   Stage-1 judgment call in `AGENT.md`.
+
+---
+
+## 2026-07-28 — Constitution v1.5 (Work Order 2)
+
+Reviewer: Doug. Applied `MWR_CONSTITUTION_AMENDMENT_v1.5.md` (six amendments: GS1
+action test, GS4 one-sentence test, keystone rule, entailment rule, format length
+rules, dependency-ordered grading). Three additional rulings recorded:
+
+### D4. Gold Standard 6 market-knowledge stays a permanent human call
+
+Every asymmetry pass rests on an assumption about what the buyer already tracks.
+**Ruling: this stays a human judgment per message, permanently.** The constitution
+does NOT encode per-vertical heuristics, and no vertical-context files are added.
+Backlog item 3 moves from OPEN to RULED.
+
+### D5. No sender credential in the message body, ever
+
+**Ruling: the message body carries no sender credential or identity claim.** No "our
+consultants came from...", no "we have helped...". Identity is carried by the sender
+name and brand alone. Added as a hard format rule in constitution Section 5 alongside
+no-CTA and no-em-dashes; Standard 2 is still met, through the insight, not a
+self-description.
+
+### D6. Field naming: keep the shipped schema's `input_that_would_close_it`
+
+The v1.5 amendment draft referred to a decline field `what_would_change_the_verdict`.
+The shipped output contract already ships `gap.input_that_would_close_it`. **Ruling:
+the shipped schema name wins over the planning draft.** The v1.5 amendment doc's
+wording was corrected to `input_that_would_close_it` before applying. The entailment
+rule's third-exit work order is carried in that existing field, marked by the new
+`gap.entailment_decline` boolean.
+
+### Deferred
+
+- **v1.5 golden fixture:** the passing golden (`examples/mwr_output.hma.json`) was NOT
+  replaced this pass. It remains a pre-v1.5 (v1.4-graded) artifact and does not pass
+  the v1.5 mechanical lint (256-word body, a buyer-conditional). The ratified v1.5
+  golden will be produced by the updated agent from a forthcoming Texada Software FHC
+  artifact and ratified by Doug. Tracked in the backlog.
+- **Negative golden fixture** (`examples/mwr_output.hma.REJECTED.json`): **delivered.**
+  Doug supplied the rejected message and its Kahuna scorecard (five misses: Standards
+  1, 4, 5, 6, 7; keystone cascade on 5/6/7; PQS, rejected). Provenance recorded in the
+  fixture: produced by the v1.4 agent, graded 7/7 under v1.4, overturned by Doug.
+
+### D7. `rejected_exemplar` added to the output contract (needs ratification)
+
+Building the negative fixture surfaced a schema gap: a `no` verdict could carry only a
+`gap`, so a rejected message and its `seven_standard_check` (where the new
+`failure_type` keystone-cascade marker lives) had nowhere to go. **Resolution: added an
+optional `rejected_exemplar` to `segment_verdict`, permitted only on a `no`** (a `yes`
+still forbids it), carrying the rejected message, its dependency-ordered scorecard, a
+`format_defects` list, and provenance. This completes the Q4 `failure_type` feature
+(which otherwise had no home on a rejection) and lets a negative fixture conform. It is
+a contract addition beyond the WO2 step-3 scope; flagged for Doug's ratification, and
+trivially reshaped if a different container is preferred.

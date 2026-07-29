@@ -172,6 +172,52 @@ def main() -> int:
             check(f"{o}/{v['segment_id']} override_warning iff override",
                   ("override_warning" in ex) == override)
 
+    print("\n== v1.5 constitution + agent version ==")
+    const = (MWR / "MWR_CONSTITUTION.md").read_text()
+    check("constitution is v1.5", "**Version:** 1.5" in const)
+    check("constitution carries the keystone rule", "keystone rule" in const)
+    check("constitution carries the entailment rule", "entailment rule" in const)
+    check("constitution carries the no-body-credential rule", "No credential in the body" in const)
+    agent_md = (MWR / "AGENT.md").read_text()
+    check("AGENT.md encodes v1.5", "MWR_CONSTITUTION.md v1.5" in agent_md)
+
+    print("\n== v1.5 mechanical checks (gate.lint helpers) ==")
+    # buyer-conditional detector: catches a second-person hedge, ignores world-conditionals
+    check("buyer-conditional detected (second-person + hedge)",
+          bool(gate.buyer_conditionals("If your exemption planning predates the rule, the math moved.")))
+    check("world-conditional not flagged (no second person)",
+          not gate.buyer_conditionals("If the deadline holds, states will file on time."))
+    check("clean assertion not flagged",
+          not gate.buyer_conditionals("Nebraska began enforcing early on May 1, 2026."))
+    # word-count gate
+    check("body over 165 words flagged", gate.word_count("w " * 200) > gate.BODY_MAX)
+    check("subject over 8 words flagged", gate.word_count("one two three four five six seven eight nine") > gate.SUBJECT_MAX)
+    # the committed v1.4 golden is a pre-v1.5 artifact: it must FAIL the v1.5 lint
+    # (over-length body and a buyer-conditional). This pins its known pre-v1.5 status.
+    hma_ex = outs["hma"]["segment_verdicts"][0]["exemplar"]
+    check("v1.4 hma golden is pre-v1.5 (fails v1.5 lint: length or buyer-conditional)",
+          gate.word_count(hma_ex["message_body"]) > gate.BODY_MAX
+          or bool(gate.buyer_conditionals(hma_ex["message_body"])))
+
+    print("\n== Negative golden fixture (hma.REJECTED) ==")
+    rej = json.loads((EX / "mwr_output.hma.REJECTED.json").read_text())
+    errs = gate.validate_against(gate.MWR_SCHEMA, rej)
+    check("mwr_output.hma.REJECTED.json conforms to output schema", not errs, "; ".join(errs[:2]))
+    rv = rej["segment_verdicts"][0]
+    check("REJECTED verdict is 'no'", rv["pvp_achievable"] == "no")
+    check("REJECTED carries a rejected_exemplar and no exemplar",
+          "rejected_exemplar" in rv and "exemplar" not in rv)
+    check("REJECTED is PQS (>=2 failed standards)", len(rv["gap"]["failed_standards"]) >= 2)
+    sc = rv["rejected_exemplar"]["seven_standard_check"]
+    gs4 = next(s for s in sc if s["standard"] == 4)
+    check("REJECTED Standard 4 (keystone) failed", not gs4["met"])
+    check("REJECTED records a keystone cascade on 5/6/7",
+          all(next(s for s in sc if s["standard"] == n).get("failure_type") == "keystone_cascade"
+              for n in (5, 6, 7)))
+    body = rv["rejected_exemplar"]["message_body"]
+    check("REJECTED body actually fails the v1.5 lint (over-length or buyer-conditional)",
+          gate.word_count(body) > gate.BODY_MAX or bool(gate.buyer_conditionals(body)))
+
     print()
     if failures:
         print(f"SELFTEST FAILED: {len(failures)} check(s) failed -> {failures}")
